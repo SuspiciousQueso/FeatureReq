@@ -6,7 +6,27 @@
 @Last modified by:   bbaldwin
 @Last modified time: 04-01-2016
 -->
+public function insert($table, $fields = array()) {
+    $keys   = array_keys($fields);
+    $values = null;
+    $x      = 1;
 
+    foreach($fields as $value) {
+        $values .= "?";
+        if($x < count($fields)) {
+            $values .= ', ';
+        }
+        $x++;
+    }
+
+    $sql = "INSERT INTO {$table} (`" . implode('`, `', $keys) . "`) VALUES ({$values})";
+
+    if(!$this->query($sql, $fields)->error()) {
+        return true;
+    }
+
+    return false;
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -36,4 +56,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     }
 
-    client ftitle description date date_1 date_2 date_3 product 
+    client ftitle description date date_1 date_2 date_3 product

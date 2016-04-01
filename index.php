@@ -7,7 +7,9 @@
 @Last modified time: 04-01-2016
 -->
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,24 +26,22 @@
 	<div id="form_container">
 
 		<h1><a>IWS Feature Request</a></h1>
-		<form id="form_1119565" class="request"  method="post" action="">
+		<form class="request"  method="post" action="app/req.Process.php">
 					<div class="form_description">
-			<h2>IWS Feature Request</h2>
-			<p>Welcom to the IWS Feature Request Form.</p>
-		</div>
-			<ul >
+			         <h2>IWS Feature Request</h2>
+			            <p>Welcome to the IWS Feature Request Form.</p>
+		      </div>
+		<ul ><li id="li_4" >
+		    <label class="description" for="client">Select Your Customer Name </label>
+		      <div>
+		          <select class="element select medium" id="client" name="client">
+			            <option value="" selected="selected"></option>
+			            <option value="1" >Client A</option>
+			            <option value="2" >Client B</option>
+			            <option value="3" >Client C</option>
 
-					<li id="li_4" >
-		<label class="description" for="client">Select Your Customer Name </label>
-		<div>
-		<select class="element select medium" id="client" name="client">
-			<option value="" selected="selected"></option>
-			<option value="1" >Client A</option>
-			<option value="2" >Client B</option>
-			<option value="3" >Client C</option>
-
-		</select>
-	</div>
+		          </select>
+	        </div>
 	<p class="guidelines" id="ftitle"><small>Please select the name that corresponds to your business name</small></p>
 		</li>		<li id="li_1" >
 		<label class="description" for="ftitle">Feature Title </label>
