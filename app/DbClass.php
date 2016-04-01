@@ -7,13 +7,41 @@
 @Last modified time: 04-01-2016
 -->
 <?php
-require("../cont/AppVars.php");
+class DB {
 
+    private $dbh;
+    private $stmt;
 
-try {
-    $db = new PDO($dsn, $un, $pw);
-} catch(PDOException $e) {
-    die('Could not connect to the database:<br/>' . $e);
+    public function __construct($user, $pass, $dbname) {
+        $this->dbh = new PDO(
+            "mysql:host=localhost;dbname=$dbname",
+            $user,
+            $pass,
+            array( PDO::ATTR_PERSISTENT => true )
+        );
+    }
+
+    public function query($query) {
+        $this->stmt = $this->dbh->prepare($query);
+        return $this;
+    }
+
+    public function execute() {
+        return $this->stmt->execute();
+    }
+
+    public function resultset() {
+        $this->execute();
+        return $this->stmt->fetchAll();
+    }
+
+    public function single() {
+        $this->execute();
+        return $this->stmt->fetch();
+    }
+    public function insert_req() {
+      
+    }
 }
 
 
