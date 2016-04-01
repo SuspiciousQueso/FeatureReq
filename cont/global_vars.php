@@ -10,6 +10,7 @@
 // Username and password for your database
 $un = 'bbaldwin';
 $pw = '#iG00gl311#';
+$dsn = 'mysql:dbname=;host=localhost;port=3306';
 
 
 ?>
