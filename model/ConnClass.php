@@ -7,7 +7,7 @@
 @Last modified time: 03-31-2016
 -->
 <?php
-require_once "../cont/global_vars.php";
+require("../cont/app_vars.php");
 
 
 try {
