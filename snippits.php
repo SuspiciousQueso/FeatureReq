@@ -1,3 +1,14 @@
+<!--
+@Author: Billy R Baldwin <bbaldwin>
+@Date:   04-01-2016
+@Email:  billyraybaldwin@gmail.com
+@Project: FeatureREQ
+@Last modified by:   bbaldwin
+@Last modified time: 04-01-2016
+-->
+
+
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         if (!$_POST['name'] || !$_POST['email'] || !$_POST['phone'] || !$_POST['detail'] || !$_POST['cost']) {
@@ -24,3 +35,5 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         }
     }
+
+    client ftitle description date date_1 date_2 date_3 product 
