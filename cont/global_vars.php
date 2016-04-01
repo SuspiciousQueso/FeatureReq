@@ -8,9 +8,9 @@
 -->
 <?php
 // Username and password for your database
-$un = 'bbaldwin';
+$un = 'brbaldwin';
 $pw = '#iG00gl311#';
-$dsn = 'mysql:dbname=;host=localhost;port=3306';
+$dsn = 'mysql:dbname=ebdb;host=aa19v9m8yhs4gc1.cjuto6cbmgfi.us-west-2.rds.amazonaws.com;port=3306';
 
 
 ?>
