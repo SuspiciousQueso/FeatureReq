@@ -4,10 +4,10 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 03-31-2016
+@Last modified time: 04-01-2016
 -->
 <?php
-require("../cont/app_vars.php");
+require("../cont/AppVars.php");
 
 
 try {
