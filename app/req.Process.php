@@ -13,11 +13,14 @@ $host = getenv('HTTP_HOST');
 if(isset($_POST["submit"])){
   $db = new DB();
 
-    $db->query('INSERT INTO request (client, title, description, target, product) VALUES (:client, :ftitle, :description, :datepicker, :product)');
-      $db->bind(':client',      $_POST["client"]);
+    $db->query('INSERT INTO request (title, description, client, priority, targetdate, ticketurl, product )
+    VALUES (:ftitle, :description, :client, :priority, :datepicker, :ticketurl, :product)');
       $db->bind(':ftitle',      $_POST["ftitle"]);
       $db->bind(':description', $_POST["description"]);
+      $db->bind(':client',      $_POST["client"]);
+      $db->bind(':priority',    $_POST["priority"]);
       $db->bind(':datepicker',  $_POST["datepicker"]);
+      $db->bindec(':ticketurl', $_POST["ticketurl"]);
       $db->bind(':product',     $_POST["product"]);
       $db->execute();
       $last = $db->lastInsertID();

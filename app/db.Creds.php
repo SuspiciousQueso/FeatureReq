@@ -11,5 +11,5 @@
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "!iG00gl311!");
-define("DB_NAME", "feartureREQ");
+define("DB_NAME", "fearturereq");
 ?>
