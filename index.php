@@ -4,13 +4,45 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-01-2016
+@Last modified time: 04-02-2016
 -->
 <?php
+if(isset($_GET['req'])){
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include('app/db.Class.php');
+$r = new DB();
+$req = $_GET["req"];
 ?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>IWS Feature Request</title>
+ <link rel="stylesheet" type="text/css" href="style/view.css" media="all">
+  </head>
+ <body id="main_body" >
+
+ 	<img id="top" src="images/top.png" alt="">
+ 	<div id="form_container">
+ 		<h1><a>IWS Feature Request</a></h1>
+    <form class="request"  method="post" action="">
+      <div class="form_description">
+         <h2>IWS Feature Request</h2>
+            <p>Below you will find the details of your feature request.</p>
+      </div>
+    <label class="description" for="client">Customer</label>
+    <p><?php echo $r->getReq($req)['client']; ?></p>
+    <label class="description" for="">Title</label>
+    <p><?php echo $r->getReq($req)['title']; ?></p>
+    </div>
+  </form>
+ 	<img id="bottom" src="images/bottom.png" alt="">
+ </body>
+</html>
+
+<?php }else{ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -42,9 +74,9 @@ error_reporting(E_ALL);
 		      <div>
 		          <select class="element select medium" id="client" name="client">
 			            <option value="" selected="selected"></option>
-			            <option value="1" >Client A</option>
-			            <option value="2" >Client B</option>
-			            <option value="3" >Client C</option>
+			            <option value="Client A" >Client A</option>
+			            <option value="Client B" >Client B</option>
+			            <option value="Client C" >Client C</option>
 
 		          </select>
 	        </div>
@@ -71,10 +103,10 @@ error_reporting(E_ALL);
 		<div>
 		<select class="element select medium" id="product" name="product">
 			<option value="" selected="selected"></option>
-			<option value="1" >Policies</option>
-			<option value="2" >Billing</option>
-			<option value="3" >Claims</option>
-			<option value="4" >Reports</option>
+			<option value="Policies" >Policies</option>
+			<option value="Billing" >Billing</option>
+			<option value="Claims" >Claims</option>
+			<option value="Reports" >Reports</option>
 
 		</select>
 		</div><p class="guidelines" id="guide_5"><small>Please indicate what product this feature is intended for. </small></p>
@@ -91,3 +123,4 @@ error_reporting(E_ALL);
 	<img id="bottom" src="images/bottom.png" alt="">
 	</body>
 </html>
+<?php } ?>

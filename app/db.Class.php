@@ -4,9 +4,12 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-01-2016
+@Last modified time: 04-02-2016
 -->
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Include database class
   include 'db.Creds.php';
 class DB {
@@ -18,7 +21,9 @@ class DB {
     private $user      = DB_USER;
     private $pass      = DB_PASS;
     private $dbname    = DB_NAME;
-
+    private $req       = '_GET';
+    private $server    = 'HTTP_HOST';
+    private $formData  = '_POST';
 
     public function __construct(){
         // Set DSN
@@ -85,21 +90,34 @@ class DB {
         return $this->dbh->lastInsertId();
     }
 
-    // Transaction options for our processes.
-    public function beginTransaction(){
-    return $this->dbh->beginTransaction();
+    public function getReq($req) {
+      global ${$this->req};
+      $this->query("SELECT id, title, client, priority from request where id = :req");
+      $this->bind(':req', $req);
+      $row = $this->single();
+      return $row;
     }
 
-    public function endTransaction(){
-    return $this->dbh->commit();
-    }
-
-    public function cancelTransaction(){
-    return $this->dbh->rollBack();
-    }
-
-    public function debugDumpParams(){
-    return $this->stmt->debugDumpParams();
+    public function processReq($formData) {
+      //global ${$this->formData};
+      var_dump($this->formData);
+      if(!empty($this->formData)) {
+        $this->query('INSERT INTO request
+          (client, title, description, target, product)
+          VALUES (:client, :ftitle, :description, :datepicker, :product)');
+          $this->bind(':client',      $this->formData["client"]);
+          $this->bind(':ftitle',      $this->formData["ftitle"]);
+          $this->bind(':description', $this->formData["description"]);
+          $this->bind(':datepicker',  $this->formData["datepicker"]);
+          $this->bind(':product',     $this->formData["product"]);
+          $this->execute();
+          $last = $this->lastInsertID();
+          //header("Location: //192.168.0.3/FeatureReq/landing.php?req=$last");
+          var_dump($this->formData);
+          }else{
+          var_dump($this->formData);
+      }
+      
     }
 
 }
