@@ -13,11 +13,12 @@ class DB {
 
     private $dbh;
     private $stmt;
+    private $error;
     private $host      = DB_HOST;
     private $user      = DB_USER;
     private $pass      = DB_PASS;
     private $dbname    = DB_NAME;
-    private $error;
+
 
     public function __construct(){
         // Set DSN
@@ -74,7 +75,7 @@ class DB {
       }
     $this->stmt->bindValue($param, $value, $type);
     }
-
+    // Used to count our rows from the query
     public function rowCount() {
         return $this->stmt->rowCount();
     }
@@ -100,7 +101,6 @@ class DB {
     public function debugDumpParams(){
     return $this->stmt->debugDumpParams();
     }
-
 
 }
 

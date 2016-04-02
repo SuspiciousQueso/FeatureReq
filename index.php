@@ -17,14 +17,20 @@ error_reporting(E_ALL);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>IWS Feature Request</title>
 <link rel="stylesheet" type="text/css" href="style/view.css" media="all">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script type="text/javascript" src="js/view.js"></script>
-<script type="text/javascript" src="js/calendar.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker({dateFormat : 'yy-mm-dd'});
+  });
+</script>
 </head>
 <body id="main_body" >
 
-	<img id="top" src="images/top.png" alt="">
+<img id="top" src="images/top.png" alt="">
 	<div id="form_container">
-
 		<h1><a>IWS Feature Request</a></h1>
 		<form class="request"  method="post" action="app/req.Process.php">
 					<div class="form_description">
@@ -55,33 +61,10 @@ error_reporting(E_ALL);
 			<textarea id="description" name="description" class="element textarea medium"></textarea>
 		</div><p class="guidelines" id="guide_2"><small>Please enter a longer description for your feature request</small></p>
 		</li>		<li id="li_3" >
-		<label class="description" for="date">Expected Date </label>
+    <label class="description" for="date">Expected Date </label>
 		<span>
-			<input id="date_1" name="date_1" class="element text" size="2" maxlength="2" value="" type="text"> /
-			<label for="date_1">MM</label>
+		<input id="datepicker" name="datepicker" class="element text" maxlength="2" value="" type="text">
 		</span>
-		<span>
-			<input id="date_2" name="date_2" class="element text" size="2" maxlength="2" value="" type="text"> /
-			<label for="date_2">DD</label>
-		</span>
-		<span>
-	 		<input id="date_3" name="date_3" class="element text" size="4" maxlength="4" value="" type="text">
-			<label for="date_3">YYYY</label>
-		</span>
-
-		<span id="calendar_3">
-			<img id="cal_img_3" class="datepicker" src="images/calendar.gif" alt="Pick a date.">
-		</span>
-		<script type="text/javascript">
-			Calendar.setup({
-			inputField	 : "date_3",
-			baseField    : "date",
-			displayArea  : "calendar_3",
-			button		 : "cal_img_3",
-			ifFormat	 : "%B %e, %Y",
-			onSelect	 : selectDate
-			});
-		</script>
 		<p class="guidelines" id="guide_3"><small>Please enter a reasonable date you hope to have this feature implemented.</small></p>
 		</li>		<li id="li_5" >
 		<label class="description" for="product">Product Selection </label>

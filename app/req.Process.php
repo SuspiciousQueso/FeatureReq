@@ -8,25 +8,20 @@
 -->
 <?php
 require("db.Class.php");
-$datestring = (isset($_POST['date_3'])) ? $_POST['date_3'] : "not";
-$datestring = str_replace('/', '-', $datestring);
-$datestamp = date("mm/dd/yyyy", strtotime($datestring));
-echo   $datestring;
-echo   var_dump($datestamp);
+$host = getenv('HTTP_HOST');
 // Instantiate DB class, and insert data from form.
 if(isset($_POST["submit"])){
   $db = new DB();
 
-    $db->query('INSERT INTO request (client, title, description, target, product) VALUES (:client, :ftitle, :description, :datestamp, :product)');
+    $db->query('INSERT INTO request (client, title, description, target, product) VALUES (:client, :ftitle, :description, :datepicker, :product)');
       $db->bind(':client',      $_POST["client"]);
       $db->bind(':ftitle',      $_POST["ftitle"]);
       $db->bind(':description', $_POST["description"]);
-      $db->bind(':datestamp',   $datestamp);
+      $db->bind(':datepicker',  $_POST["datepicker"]);
       $db->bind(':product',     $_POST["product"]);
-
       $db->execute();
-
-      echo $db->lastInsertId();
+      $last = $db->lastInsertID();
+      header("Location: //$host/FeatureReq/landing.php?req=$last");
 }else{
   echo "Something went wrong!";
 }
