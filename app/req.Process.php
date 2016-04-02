@@ -4,11 +4,18 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-01-2016
+@Last modified time: 04-02-2016
 -->
 <?php
 require("db.Class.php");
 $host = getenv('HTTP_HOST');
+function getReq($req) {
+  $req = $_GET["req"];
+  $db = new DB();
+  $db->query("SELECT * from request where id = :req");
+  $db->bind(':req', $req);
+  $rows = $db->single();
+}
 // Instantiate DB class, and insert data from form.
 if(isset($_POST["submit"])){
   $db = new DB();
@@ -22,7 +29,7 @@ if(isset($_POST["submit"])){
       $db->execute();
       $last = $db->lastInsertID();
       header("Location: //$host/FeatureReq/landing.php?req=$last");
-}else{
-  echo "Something went wrong!";
-}
+      }else{
+        echo "Something went wrong!";
+    }
 ?>

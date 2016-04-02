@@ -4,19 +4,16 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-01-2016
+@Last modified time: 04-02-2016
 -->
 <?php
-include("db.Class.php");
-
+include("req.Class.php");
+$r = new reqProcess();
 $req = $_GET["req"];
-$db = new DB();
-$db->query("SELECT * from request where id = :req");
-$db->bind(':req', $req);
-$rows = $db->single();
-
-
-
+//$db = new DB();
+//$db->query("SELECT * from request where id = :req");
+//$db->bind(':req', $req);
+//$rows = $db->single();
 ?>
  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
  <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,9 +33,12 @@ $rows = $db->single();
             <p>Below you will find the details of your feature request.</p>
       </div>
     <label class="description" for="client">Customer</label>
-    <p><?php echo $rows['client']; ?></p>
+    <p><?php $r->getReq($req)['client']; ?></p>
+    <label class="description" for="">Title</label>
+    <p><?php  ?></p>
     </div>
   </form>
  	<img id="bottom" src="../images/bottom.png" alt="">
+  <?php  ?>
  </body>
 </html>
