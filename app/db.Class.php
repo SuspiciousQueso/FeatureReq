@@ -23,7 +23,6 @@ class DB {
     private $dbname    = DB_NAME;
     private $req       = '_GET';
     private $server    = 'HTTP_HOST';
-    private $formData  = '_POST';
 
     public function __construct(){
         // Set DSN
