@@ -97,27 +97,11 @@ class DB {
       return $row;
     }
 
-    public function processReq($formData) {
-      //global ${$this->formData};
-      var_dump($this->formData);
-      if(!empty($this->formData)) {
-        $this->query('INSERT INTO request
-          (client, title, description, target, product)
-          VALUES (:client, :ftitle, :description, :datepicker, :product)');
-          $this->bind(':client',      $this->formData["client"]);
-          $this->bind(':ftitle',      $this->formData["ftitle"]);
-          $this->bind(':description', $this->formData["description"]);
-          $this->bind(':datepicker',  $this->formData["datepicker"]);
-          $this->bind(':product',     $this->formData["product"]);
-          $this->execute();
-          $last = $this->lastInsertID();
-          //header("Location: //192.168.0.3/FeatureReq/landing.php?req=$last");
-          var_dump($this->formData);
-          }else{
-          var_dump($this->formData);
-      }
+    public function rotatePriority() {
+      
 
     }
+
 
 }
 
