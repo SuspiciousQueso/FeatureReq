@@ -106,7 +106,7 @@ class DB {
     }
 
     //Used to get our req ID and load it to the UI
-    public function getReq($req) {
+    public function processReq($req) {
       $this->query("SELECT id, title, client, priority, ticketurl FROM request
                     WHERE id = :req");
       $this->bind(':req', $req);
@@ -115,9 +115,10 @@ class DB {
     }
 
     public function getClientReq($client) {
-      $this->query("SELECT id, client, priority FROM request
+      $this->query("SELECT * FROM request
                     WHERE client = :client");
-      $row = $this->stmt->single();
+      $this->bind(':client', $client);
+      $row = $this->single();
       return $row;
     }
     // Used to count our rows from the query
@@ -138,7 +139,15 @@ class DB {
       return $row;
     }
 
-
+    public function convertClient($client) {
+      if ($client == 0) {
+        echo "Client A";
+      }elseif ($client == 1){
+        echo "Client B";
+      }elseif ($client == 2 ){
+        echo "Client C";
+      }
+    }
 
 }
 

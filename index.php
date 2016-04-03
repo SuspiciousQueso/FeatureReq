@@ -7,12 +7,18 @@
 @Last modified time: 04-03-2016
 -->
 <?php
-if(isset($_GET['client'])) {
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
-  $r = new DB();
-}
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if(isset($_GET['client']) && !isset($_GET['req'])) {
+  include('app/db.Class.php');
+
+  $r       = new DB();
+  $client  = $_GET['client'];
+  $reqList = $r->getClientReq($client);
+  $convert = $r->convertClient($client);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,16 +35,11 @@ if(isset($_GET['client'])) {
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>IWS Feature Request</h2>
-           <p>Below you will find the all requests pending for <?php echo $client; ?>.</p>
+           <p>Below you will find the all requests pending for <?php echo $convert; ?>.</p>
      </div>
-   <label class="description" for="client">Customer</label>
-   <p><?php echo $r->getReq($req)['client']; ?></p>
-   <label class="description" for="">Title</label>
-   <p><?php echo $r->getReq($req)['title']; ?></p>
-   <label class="description" for="">Priority</label>
-   <p><?php echo $r->getReq($req)['priority']; ?></p>
-   <label class="description" for="">Ticket Tracking URL</label>
-   <p><a href="<?php echo $url; ?>">Ticket Link</a></p>
+   <label class="description" for="client">Requests</label>
+   <p><?php  ?></p>
+
    </div>
  </form>
  <img id="bottom" src="images/bottom.png" alt="">
@@ -46,7 +47,7 @@ if(isset($_GET['client'])) {
 </html>
 
 <?php
-if(isset($_GET['req'])){
+}elseif(isset($_GET['req'])){
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -76,11 +77,11 @@ $url      = "http://$server/index.php?client=$client";
             <p>Below you will find the details of your feature request.</p>
       </div>
     <label class="description" for="client">Customer</label>
-    <p><?php echo $r->getReq($req)['client']; ?></p>
+    <p><?php echo $r->processReq($req)['client']; ?></p>
     <label class="description" for="">Title</label>
-    <p><?php echo $r->getReq($req)['title']; ?></p>
+    <p><?php echo $r->processReq($req)['title']; ?></p>
     <label class="description" for="">Priority</label>
-    <p><?php echo $r->getReq($req)['priority']; ?></p>
+    <p><?php echo $r->processReq($req)['priority']; ?></p>
     <label class="description" for="">Ticket Tracking URL</label>
     <p><a href="<?php echo $url; ?>">Ticket Link</a></p>
     </div>
@@ -91,7 +92,6 @@ $url      = "http://$server/index.php?client=$client";
 
 <?php }else{
   function genUrl() {
-
     $url = "http://$server/index.php?req=$req&priority=$priority";
     var_dump($url);
   }
