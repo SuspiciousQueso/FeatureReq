@@ -4,14 +4,14 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-02-2016
+@Last modified time: 04-03-2016
 -->
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // Include database class
-  include 'db.Creds.php';
+include 'db.Creds.php';
 class DB {
 
     private $dbh;
@@ -98,7 +98,7 @@ class DB {
     }
 
     public function rotatePriority() {
-      
+
 
     }
 
