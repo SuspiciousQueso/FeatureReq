@@ -17,13 +17,18 @@ class DB {
     private $dbh;
     private $stmt;
     private $error;
+    private $priority;
+    private $client;
+    private $req;
     private $host      = DB_HOST;
     private $user      = DB_USER;
     private $pass      = DB_PASS;
     private $dbname    = DB_NAME;
-    private $req       = '_GET';
     private $server    = 'HTTP_HOST';
 
+
+
+    // Constructor to connect to the DB and catch any errors.
     public function __construct(){
         // Set DSN
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
@@ -40,27 +45,47 @@ class DB {
         catch(PDOException $e){
             $this->error = $e->getMessage();
         }
+
+        // Get our values from url
+        if (isset($_GET['priority']) and isset($_GET['req'])) {
+          $this->priority = $_GET['priority'];
+          $this->req = $_GET['req'];
+        }else{
+          $this->priority = NULL;
+          $this->req = NULL;
+        }
+
+        if (isset($_GET['client'])) {
+          $this->client = $_GET["client"];
+        }else{
+          $this->client = NULL;
+        }
     }
 
+    //Build the query
     public function query($query) {
         $this->stmt = $this->dbh->prepare($query);
         return $this;
     }
 
+    //Execute our query
     public function execute() {
         return $this->stmt->execute();
     }
 
+    //Use this to see the fetchAll() array PDO function
     public function resultset() {
         $this->execute();
         return $this->stmt->fetchAll();
     }
 
+    // Used this to get one result from a query
     public function single() {
         $this->execute();
         return $this->stmt->fetch();
     }
 
+    //Used to bind our query parameters
     public function bind($param, $value, $type = null) {
       if (is_null($type)) {
           switch (true) {
@@ -79,6 +104,22 @@ class DB {
       }
     $this->stmt->bindValue($param, $value, $type);
     }
+
+    //Used to get our req ID and load it to the UI
+    public function getReq($req) {
+      $this->query("SELECT id, title, client, priority, ticketurl FROM request
+                    WHERE id = :req");
+      $this->bind(':req', $req);
+      $row = $this->single();
+      return $row;
+    }
+
+    public function getClientReq($client) {
+      $this->query("SELECT id, client, priority FROM request
+                    WHERE client = :client");
+      $row = $this->stmt->single();
+      return $row;
+    }
     // Used to count our rows from the query
     public function rowCount() {
         return $this->stmt->rowCount();
@@ -89,18 +130,14 @@ class DB {
         return $this->dbh->lastInsertId();
     }
 
-    public function getReq($req) {
-      global ${$this->req};
-      $this->query("SELECT id, title, client, priority from request where id = :req");
-      $this->bind(':req', $req);
+    // Get the client priority int value.
+    public function clientPriority($priority) {
+      $this->query("SELECT priority FROM request WHERE priority = :priority");
+      $this->bind(':priority', $priority);
       $row = $this->single();
       return $row;
     }
 
-    public function rotatePriority() {
-
-
-    }
 
 
 }
