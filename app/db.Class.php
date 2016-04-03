@@ -140,13 +140,21 @@ class DB {
     }
 
     public function convertClient($client) {
-      if ($client == 0) {
-        echo "Client A";
-      }elseif ($client == 1){
-        echo "Client B";
-      }elseif ($client == 2 ){
-        echo "Client C";
-      }
+      switch ($client) {
+        case 0:
+          $client = "Client A";
+          break;
+        case 1:
+          $client = "Client B";
+          break;
+        case 2:
+          $client = "Client C";
+          break;
+        default:
+          echo "No client selected";
+        }
+        return $client;
+
     }
 
 }

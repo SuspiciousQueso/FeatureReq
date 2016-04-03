@@ -13,12 +13,8 @@ error_reporting(E_ALL);
 
 if(isset($_GET['client']) && !isset($_GET['req'])) {
   include('app/db.Class.php');
-
   $r       = new DB();
   $client  = $_GET['client'];
-  $reqList = $r->getClientReq($client);
-  $convert = $r->convertClient($client);
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,10 +31,11 @@ if(isset($_GET['client']) && !isset($_GET['req'])) {
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>IWS Feature Request</h2>
-           <p>Below you will find the all requests pending for <?php echo $convert; ?>.</p>
+           <p>Below you will find the all requests pending for <?php echo $r->convertClient($client); ?>.</p>
      </div>
+  
    <label class="description" for="client">Requests</label>
-   <p><?php  ?></p>
+   <p><?php echo $r->getClientReq($client)['title'];  ?></p>
 
    </div>
  </form>
