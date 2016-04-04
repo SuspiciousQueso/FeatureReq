@@ -7,8 +7,10 @@
 @Last modified time: 04-04-2016
 -->
 <?php
-// Include database class
+// Include Application Globals
 include 'db.Globals.php';
+
+// Declare main App class
 class DB {
 
     private $dbh;
