@@ -4,8 +4,9 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-03-2016
+@Last modified time: 04-04-2016
 -->
+
 <?php
 if(isset($_GET['ticket']) && isset($_GET['client'])){
   ini_set('display_errors', 1);
@@ -24,6 +25,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
   $created    = $r->getClientReq($client)['created_date'];
   $assignedTo = $r->pickDeveloper($developer);
   $converted  = $r->convertClient($client);
+  $status     = $r->assigned($assigned);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -40,7 +42,8 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>IWS Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
-           <p>Your ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.<?php }else{ ?> assigned to <?php echo $assignedTo; }?></p>
+           <p>Your ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.
+             Click <a href="<?php echo "http://$server/views/req.Assign.php?ticket=$ticket&client=$client";?>">here</a> to assign the ticket.<?php }else{ ?> assigned to <?php echo $assignedTo; }?></p>
      </div>
       <table style="width:100%">
         <tr>
@@ -48,12 +51,14 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
             <th>Ticket Number</th>
             <th>Assigned</th>
             <th>Date Created</th>
+            <th>Date Expected</th>
         </tr>
         <tr>
           <td><?php echo $title;?></a></td>
           <td><?php echo $ticket;?></td>
-          <td><?php echo $assigned;?></td>
+          <td><?php echo $status;?></td>
           <td><?php echo $created; ?></td>
+          <td><?php echo $targetDate; ?></td>
         </tr>
       </table>
    </div>
@@ -131,7 +136,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include('app/db.Class.php');
 $r = new DB();
-$server = $r->server();
+$server   = $r->server();
 $req      = $_GET["req"];
 $priority = $_GET["priority"];
 $client   = $_GET["client"];
@@ -196,7 +201,7 @@ $url      = "http://$server/index.php?client=$client";
 <img id="top" src="images/top.png" alt="">
 	<div id="form_container">
 		<h1><a href="<?php echo $r->server(); ?>">IWS Feature Request</a></h1>
-		<form class="request"  method="post" action="app/req.Process.php">
+		<form class="request"  method="post" action="app/db.Process.php">
 					<div class="form_description">
 			         <h2>Welcome to the IWS Feature Request Form.</h2>
 			            <p>Please fill out the options below.</p>
@@ -263,8 +268,6 @@ $url      = "http://$server/index.php?client=$client";
 		</li>
 
 					<li class="buttons">
-          <input id="assigned" type="hidden" name="assigned" value="1" />
-          <input id="developer" type="hidden" name="developer" value="<?php echo $dev;?>" />
           <input id="createdDate" type="hidden" name="createdDate" value="<?php echo $createdDate;?>" />
 
 				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />

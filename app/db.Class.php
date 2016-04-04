@@ -168,17 +168,17 @@ class DB {
 
     public function assigned($assigned) {
       switch ($assigned) {
-        case 1:
+        case 0:
           $assigned = "No";
           break;
-        case 2:
+        case 1:
           $assigned = "Yes";
           break;
         default:
           $assigned = "No";
           break;
       }
-
+        return $assigned;
     }
     public function pickDeveloper($dev) {
 
