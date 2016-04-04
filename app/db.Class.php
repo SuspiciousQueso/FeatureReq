@@ -4,12 +4,9 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-03-2016
+@Last modified time: 04-04-2016
 -->
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 // Include database class
 include 'db.Creds.php';
 class DB {
@@ -25,9 +22,6 @@ class DB {
     private $user      = DB_USER;
     private $pass      = DB_PASS;
     private $dbname    = DB_NAME;
-
-
-
 
     // Constructor to connect to the DB and catch any errors.
     public function __construct(){

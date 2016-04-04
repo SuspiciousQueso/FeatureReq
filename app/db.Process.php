@@ -28,7 +28,7 @@ if(isset($_POST["submit"])){
       $last = $db->lastInsertID();
       $priority = $_POST["priority"];
       $client = $_POST["client"];
-      header("Location: http://$server/index.php?req=$last&priority=$priority&client=$client");
+      header("Location: http://$server/views/req.ticket.php?req=$last&priority=$priority&client=$client");
       }else{
         echo "Something went wrong!";
 }
