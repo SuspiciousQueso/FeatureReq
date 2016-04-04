@@ -21,6 +21,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
   $ticket     = $r->getClientReq($client)['ticket_number'];
   $assigned   = $r->getClientReq($client)['assigned'];
   $developer  = $r->getClientReq($client)['developer'];
+  $created    = $r->getClientReq($client)['created_date'];
   $assignedTo = $r->pickDeveloper($developer);
   $converted  = $r->convertClient($client);
 ?>
@@ -38,7 +39,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
    <h1><a href="<?php echo $server;?>">IWS Feature Request</a></h1>
    <form class="request"  method="post" action="">
      <div class="form_description">
-        <h2>IWS Feature Request</h2>
+        <h2>IWS Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
            <p>Your ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.<?php }else{ ?> assigned to <?php echo $assignedTo; }?></p>
      </div>
       <table style="width:100%">
@@ -46,11 +47,13 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
             <th>Feature Title</th>
             <th>Ticket Number</th>
             <th>Assigned</th>
+            <th>Date Created</th>
         </tr>
         <tr>
-          <td><a href="<?php echo "http://$server/index.php?ticket=$ticket";?>"><?php echo $title;?></a></td>
+          <td><?php echo $title;?></a></td>
           <td><?php echo $ticket;?></td>
           <td><?php echo $assigned;?></td>
+          <td><?php echo $created; ?></td>
         </tr>
       </table>
    </div>
@@ -73,6 +76,7 @@ error_reporting(E_ALL);
   $ticket     = $r->getClientReq($client)['ticket_number'];
   $assigned   = $r->getClientReq($client)['assigned'];
   $converted  = $r->convertClient($client);
+  $status     = $r->assigned($assigned);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -96,12 +100,18 @@ error_reporting(E_ALL);
           <th>Feature Title</th>
           <th>Ticket Number</th>
           <th>Assigned</th>
+          <th>Date Created</th>
         </tr>
+
+<?php  foreach($r->getTickets($client) as $res) { ?>
         <tr>
-          <td><a href="<?php echo "http://$server/index.php?client=$client&ticket=$ticket";?>"><?php echo $title;?></a></td>
-          <td><?php echo $ticket;?></td>
-          <td><?php echo $assigned;?></td>
+          <td><a href="<?php echo "http://$server/index.php?client=$client&ticket=$ticket";?>"><?php echo $res['title'];?></a></td>
+          <td><?php echo $res['ticket_number']; ?></td>
+          <td><?php echo $status; ?></td>
+          <td><?php echo $res['created_date']; ?></td>
         </tr>
+<?php    } ?>
+
       </table>
 
   <!-- <label class="description" for="client">Request Title</label>
@@ -141,8 +151,8 @@ $url      = "http://$server/index.php?client=$client";
     <h1><a href="<?php echo $server; ?>">IWS Feature Request</a></h1>
 		<form class="request"  method="post" action="app/req.Process.php">
 					<div class="form_description">
-			         <h2>Welcome to the IWS Feature Request Form.</h2>
-			          <p>Please fill out the options below.</p>
+			         <h2>Thank you, your request has been processed. Please see the details below.</h2>
+			          <p>Click on the link to track all open tickets you have with us.</p>
 		      </div>
     <label class="description" for="client">Customer</label>
     <p><?php echo $r->convertClient($client); ?></p>
@@ -162,6 +172,7 @@ $url      = "http://$server/index.php?client=$client";
   include('app/db.Class.php');
   $r = new DB();
   $dev = rand(1, 4);
+  $createdDate = date('Y-m-d H:i:s');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -254,6 +265,7 @@ $url      = "http://$server/index.php?client=$client";
 					<li class="buttons">
           <input id="assigned" type="hidden" name="assigned" value="1" />
           <input id="developer" type="hidden" name="developer" value="<?php echo $dev;?>" />
+          <input id="createdDate" type="hidden" name="createdDate" value="<?php echo $createdDate;?>" />
 
 				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
 		</li>

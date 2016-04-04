@@ -123,9 +123,17 @@ class DB {
       return $row;
     }
 
+    public function getTickets($client) {
+      $this->query("SELECT * FROM request WHERE client = :client");
+      $this->bind(':client', $client);
+      $row = $this->resultset();
+      return $row;
+
+    }
+
     public function getDeveloper($ticket) {
-      $this->query("SELECT client, ticekt_number, developer FROM request
-                    WHERE ticket_number == :ticket");
+      $this->query("SELECT client, ticket_number, developer FROM request
+                    WHERE ticket_number = :ticket");
       $this->bind(':ticket', $ticket);
       $row = $this->single();
       return $row;
@@ -159,14 +167,21 @@ class DB {
     }
 
     public function assigned($assigned) {
-      if($assigned == 1) {
-        echo "No";
-      }else{
-        echo "Yes";
+      switch ($assigned) {
+        case 1:
+          $assigned = "No";
+          break;
+        case 2:
+          $assigned = "Yes";
+          break;
+        default:
+          $assigned = "No";
+          break;
       }
+
     }
     public function pickDeveloper($dev) {
-               
+
       switch($dev){
         case 1:
           $dev = "Billy R Baldwin";
