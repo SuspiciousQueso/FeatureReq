@@ -42,7 +42,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
      <div class="form_description">
         <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
            <p>Ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.
-             Click <a href="<?php echo "http://$server/views/req.Assign.php?ticket=$ticket&client=$client";?>">
+             Click <a href="<?php echo "http://$server/views/req.assign.php?ticket=$ticket&client=$client";?>">
                here</a> to assign the ticket.
             <?php }else{ ?> assigned to <?php echo $assignedTo; }?>
           </p>

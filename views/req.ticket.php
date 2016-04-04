@@ -7,16 +7,19 @@
 @Last modified time: 04-04-2016
 -->
 <?php
-if(isset($_GET['req'])){
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include('../app/db.Class.php');
 
 $r = new DB();
-$r->getErrors();
 $server   = $r->server();
 $req      = $_GET["req"];
 $priority = $_GET["priority"];
-$client   = $_GET["client"];
-$url      = "http://$server/views/req.tickets.php?client=$client";
+$c        = $_GET["client"];
+$client   = $r->convertClient($c);
+
+//$ticket   = $_GET['ticket'];
 ?>
  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
  <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,7 +32,7 @@ $url      = "http://$server/views/req.tickets.php?client=$client";
 
  	<img id="top" src="../images/top.png" alt="">
  	<div id="form_container">
-    <h1><a href="<?php echo $server; ?>">IWS Feature Request</a></h1>
+    <h1><a href="<?php echo "http://$server/"; ?>">IWS Feature Request</a></h1>
 		<form class="request"  method="post" action="">
 					<div class="form_description">
 			         <h2>Thank you, your request has been processed. Please see the details below.</h2>
@@ -40,6 +43,7 @@ $url      = "http://$server/views/req.tickets.php?client=$client";
         <th>Customer Name</th>
         <th>Request Title</th>
         <th>Priority</th>
+        <th>Expected Date</th>
         <th>Ticket Tracking URL</th>
       </tr>
 
@@ -47,7 +51,8 @@ $url      = "http://$server/views/req.tickets.php?client=$client";
         <td><?php echo $r->convertClient($client);?></a></td>
         <td><?php echo $r->processReq($req)['title']; ?></td>
         <td><?php echo $r->processReq($req)['priority']; ?></td>
-        <td><a href="<?php echo $url; ?>">Ticket Link</a></td>
+        <td><?php echo $r->processReq($req)['targetdate'];?></td>
+        <td><a href="<?php echo "http://$server/views/req.tickets.php?client=$c"; ?>">Open Tickets</a></td>
       </tr>
 
 
@@ -57,4 +62,3 @@ $url      = "http://$server/views/req.tickets.php?client=$client";
  	<img id="bottom" src="../images/bottom.png" alt="">
  </body>
 </html>
-<?php } ?>

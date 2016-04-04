@@ -20,6 +20,7 @@ class DB {
     private $client;
     private $ticket;
     private $server;
+    private $assigned;
     private $host      = DB_HOST;
     private $user      = DB_USER;
     private $pass      = DB_PASS;
@@ -42,7 +43,6 @@ class DB {
         catch(PDOException $e){
             $this->error = $e->getMessage();
         }
-
         // Get our values from url
         if (isset($_GET['priority']) and isset($_GET['ticket'])) {
           $this->priority = $_GET['priority'];
@@ -104,7 +104,7 @@ class DB {
 
     //Used to get our req ID and load it to the UI
     public function processReq($req) {
-      $this->query("SELECT id, title, client, priority, ticketurl FROM request
+      $this->query("SELECT id, title, client, priority, ticketurl, targetdate FROM request
                     WHERE id = :req");
       $this->bind(':req', $req);
       $row = $this->single();
@@ -143,6 +143,21 @@ class DB {
       $row = $this->single();
       return $row;
     }
+
+    public function getAssigned($assigned) {
+      $this->query("SELECT assigned FROM request
+                    WHERE assigned = :assigned");
+      $this->bind(':assigned', $assigned);
+      $this->single();
+      if($assigned == 0) {
+        echo "No";
+        return $assigned;
+      }elseif($assigned == 1){
+        echo "Yes";
+        return $assigned;
+      }
+
+    }
     // Used to count our rows from the query
     public function rowCount() {
         return $this->stmt->rowCount();
@@ -171,20 +186,6 @@ class DB {
 
     }
 
-    public function assigned($assigned) {
-      switch ($assigned) {
-        case 0:
-          $assigned = "No";
-          break;
-        case 1:
-          $assigned = "Yes";
-          break;
-        default:
-          $assigned = "No";
-          break;
-      }
-        return $assigned;
-    }
     public function pickDeveloper($dev) {
 
       switch($dev){
@@ -207,7 +208,7 @@ class DB {
     }
 
     public function server() {
-      $server = BASE_URL;
+      $server = $_SERVER['SERVER_NAME'];
       return $server;
     }
 

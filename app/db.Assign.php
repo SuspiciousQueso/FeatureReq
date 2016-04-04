@@ -8,16 +8,20 @@
 -->
 <?php
 require("db.Class.php");
-if(isset($_POST['assign'])) {
-  $client    =  $_GET['ticket'];
-  $developer =  $_POST['developer'];
-  $ticket    =  $_GET['ticket'];
-  $server    =  $_SERVER['HTTP_HOST'];
+
+if(isset($_POST['submit'])) {
   $db = new DB();
-    $db->query("UPDATE request SET assigned = 1, developer = :developer WHERE ticket_number = :ticket");
-      $db->bind(':developer', $developer);
-      $db->bind(':ticket',    $ticket);
+  $server = $db->server();
+    $db->query("UPDATE request SET assigned = :assigned, developer = :developer WHERE ticket_number = :ticket");
+      $db->bind(':assigned',  $_POST['assigned']);
+      $db->bind(':developer', $_POST['developer']);
+      $db->bind(':ticket',    $_POST['ticket']);
       $db->execute();
+      $client    =  $_POST['client'];
+      $ticket    =  $_POST['ticket'];
       header("Location: http://$server/views/req.ticket.php?client=$client&ticket=$ticket");
-}
+    }else{
+      echo "Somethings not right";
+
+    }
 ?>

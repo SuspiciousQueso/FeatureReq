@@ -11,8 +11,7 @@ if(isset($_GET['client']) && !isset($_GET['req'])) {
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-  include('../app/db.Class.php');
+include('../app/db.Class.php');
   $r          = new DB();
   $server     = $r->server();
   $client     = $_GET['client'];
@@ -21,7 +20,8 @@ error_reporting(E_ALL);
   $ticket     = $r->getClientReq($client)['ticket_number'];
   $assigned   = $r->getClientReq($client)['assigned'];
   $converted  = $r->convertClient($client);
-  $status     = $r->assigned($assigned);
+  $status     = $r->getAssigned($assigned);
+  var_dump($status);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -34,7 +34,7 @@ error_reporting(E_ALL);
 
  <img id="top" src="../images/top.png" alt="">
  <div id="form_container">
-   <h1><a href="<?php echo $server; ?>">IWS Feature Request</a></h1>
+   <h1><a href="<?php echo "http://$server"; ?>">IWS Feature Request</a></h1>
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>Open Tickets For <?php echo $converted; ?></h2>

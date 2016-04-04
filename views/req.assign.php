@@ -8,23 +8,13 @@
 -->
 <?php
 if(isset($_GET['ticket'])) {
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
+
 
   include('../app/db.Class.php');
   $r          = new DB();
   $server     = $r->server();
   $client     = $_GET['client'];
-  $title      = $r->getClientReq($client)['title'];
-  $targetDate = $r->getClientReq($client)['targetdate'];
-  $ticket     = $r->getClientReq($client)['ticket_number'];
-  $assigned   = $r->getClientReq($client)['assigned'];
-  $developer  = $r->getClientReq($client)['developer'];
-  $created    = $r->getClientReq($client)['created_date'];
-  $assignedTo = $r->pickDeveloper($developer);
-  $converted  = $r->convertClient($client);
-  $status     = $r->assigned($assigned);
+  $ticket     = $_GET['ticket'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -55,11 +45,10 @@ if(isset($_GET['ticket'])) {
                   <option value="4" >Harry Potter</option>
               </select>
               <li class="buttons">
-              <input id="assigned" type="hidden" name="assigned" value="1" />
-              <input id="developer" type="hidden" name="developer" value="<?php echo $dev;?>" />
-              <input id="createdDate" type="hidden" name="createdDate" value="<?php echo $createdDate;?>" />
-
-    				<input id="saveForm" class="button_text" type="submit" name="assign" value="Assign" />
+            <input id="" type="hidden" name="client" value="<?php echo $client;?>"></input>
+            <input id="" type="hidden" name="assigned" value="1" />
+            <input id="" type="hidden" name="ticket" value="<?php echo $ticket;?>"></input>
+            <input id="assign" class="button_text" type="submit" name="submit" value="Submit" />
     		</li>
       </ul>
  	      </div>
