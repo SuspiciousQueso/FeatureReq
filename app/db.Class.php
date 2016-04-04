@@ -156,6 +156,25 @@ class DB {
         return $client;
 
     }
+    public function pickDeveloper($dev) {
+      switch($dev){
+        case 1:
+          $dev = "Billy R Baldwin";
+          break;
+        case 2:
+          $dev = "Robert Heinlein";
+          break;
+        case 3:
+          $dev = "Superman Jones";
+          break;
+        case 4:
+          $dev = "Harry Potter";
+          break;
+        default:
+          $dev = "None Assigned";
+      }
+      return $dev;
+    }
 
 }
 

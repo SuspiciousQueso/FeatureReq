@@ -7,14 +7,21 @@
 @Last modified time: 04-03-2016
 -->
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if(isset($_GET['ticket']) && isset($_GET['client'])){
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
-if(isset($_GET['client']) && !isset($_GET['req'])) {
   include('app/db.Class.php');
-  $r       = new DB();
-  $client  = $_GET['client'];
+  $r          = new DB();
+  $server     = $server = getenv('HTTP_HOST');
+  $client     = $_GET['client'];
+  $title      = $r->getClientReq($client)['title'];
+  $targetDate = $r->getClientReq($client)['targetdate'];
+  $ticket     = $r->getClientReq($client)['ticket_number'];
+  $assigned   = $r->getClientReq($client)['assigned'];
+  $developer  = $r->getClientReq($client)['developer'];
+  $converted  = $r->convertClient($client);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -31,20 +38,73 @@ if(isset($_GET['client']) && !isset($_GET['req'])) {
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>IWS Feature Request</h2>
-           <p>Below you will find the all requests pending for <?php echo $r->convertClient($client); ?>.</p>
+           <p>Your ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.<?php }else{ ?> assigned to <?php echo $developer; }?></p>
      </div>
-  
-   <label class="description" for="client">Requests</label>
-   <p><?php echo $r->getClientReq($client)['title'];  ?></p>
-
+      <table style="width:100%">
+        <tr>
+          <td><a href="<?php echo "http://$server/index.php?ticket=$ticket";?>"><?php echo $title;?></a></td>
+          <td><?php echo $ticket;?></td>
+          <td><?php echo $assigned;?></td>
+        </tr>
+      </table>
    </div>
  </form>
  <img id="bottom" src="images/bottom.png" alt="">
 </body>
 </html>
 
-<?php
-}elseif(isset($_GET['req'])){
+<?php }elseif(isset($_GET['client']) && !isset($_GET['req'])) {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+  include('app/db.Class.php');
+  $r          = new DB();
+  $server     = $server = getenv('HTTP_HOST');
+  $client     = $_GET['client'];
+  $title      = $r->getClientReq($client)['title'];
+  $targetDate = $r->getClientReq($client)['targetdate'];
+  $ticket     = $r->getClientReq($client)['ticket_number'];
+  $assigned   = $r->getClientReq($client)['assigned'];
+  $converted  = $r->convertClient($client);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>IWS Feature Request</title>
+<link rel="stylesheet" type="text/css" href="style/view.css" media="all">
+ </head>
+<body id="main_body" >
+
+ <img id="top" src="images/top.png" alt="">
+ <div id="form_container">
+   <h1><a>IWS Feature Request</a></h1>
+   <form class="request"  method="post" action="">
+     <div class="form_description">
+        <h2>IWS Feature Request</h2>
+           <p>Below you will find an overview for all open requests for <?php echo $converted; ?>. Click the link to follow for a specific ticket.</p>
+     </div>
+      <table style="width:100%">
+        <tr>
+          <td><a href="<?php echo "http://$server/index.php?client=$client&ticket=$ticket";?>"><?php echo $title;?></a></td>
+          <td><?php echo $ticket;?></td>
+          <td><?php echo $assigned;?></td>
+        </tr>
+      </table>
+
+  <!-- <label class="description" for="client">Request Title</label>
+   <p><?php echo $r->getClientReq($client)['title'];?></p>
+   <label class="description" for="client">Request Date</label>
+   <p><?php echo $r->getClientReq($client)['targetdate'];?></p>
+ -->
+   </div>
+ </form>
+ <img id="bottom" src="images/bottom.png" alt="">
+</body>
+</html>
+
+<?php }elseif(isset($_GET['req'])){
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -74,7 +134,7 @@ $url      = "http://$server/index.php?client=$client";
             <p>Below you will find the details of your feature request.</p>
       </div>
     <label class="description" for="client">Customer</label>
-    <p><?php echo $r->processReq($req)['client']; ?></p>
+    <p><?php echo $r->convertClient($client); ?></p>
     <label class="description" for="">Title</label>
     <p><?php echo $r->processReq($req)['title']; ?></p>
     <label class="description" for="">Priority</label>
@@ -88,12 +148,10 @@ $url      = "http://$server/index.php?client=$client";
 </html>
 
 <?php }else{
-  function genUrl() {
-    $url = "http://$server/index.php?req=$req&priority=$priority";
-    var_dump($url);
-  }
-
-  ?>
+  include('app/db.Class.php');
+  $r = new DB();
+  $dev = rand(1, 4);
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -107,7 +165,7 @@ $url      = "http://$server/index.php?client=$client";
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
   $(function() {
-    $( "#datepicker" ).datepicker({dateFormat : 'yy-mm-dd'});
+    $( "#targetdate" ).datepicker({dateFormat : 'yy-mm-dd'});
   });
 </script>
 </head>
@@ -164,7 +222,7 @@ $url      = "http://$server/index.php?client=$client";
     <li id="li_3" >
     <label class="description" for="date">Expected Date</label>
 		<span>
-		<input id="datepicker" name="datepicker" class="element text" maxlength="2" value="" type="text">
+		<input id="targetdate" name="targetdate" class="element text" maxlength="2" value="" type="text">
 		</span>
 		<p class="guidelines" id="guide_3"><small>Please enter a reasonable date you hope to have this feature implemented.</small></p>
 		</li>
@@ -183,8 +241,8 @@ $url      = "http://$server/index.php?client=$client";
 		</li>
 
 					<li class="buttons">
-			    <input type="hidden" name="form_id" value="1119565" />
-          <!--<input id="ticketurl" type="hidden" name="ticketurl" value="<?php genUrl();?>" />-->
+          <input id="assigned" type="hidden" name="assigned" value="1" />
+          <input id="developer" type="hidden" name="developer" value="<?php echo $dev;?>" />
 
 				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
 		</li>
