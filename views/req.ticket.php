@@ -33,7 +33,7 @@ $url      = "http://$server/views/req.tickets.php?client=$client";
 		<form class="request"  method="post" action="">
 					<div class="form_description">
 			         <h2>Thank you, your request has been processed. Please see the details below.</h2>
-			          <p>Click on the link to track all open tickets you have with us.</p>
+			          <p>Click on the link below to track all open tickets for <?php echo $client;?>.</p>
 		</div>
     <table style="width:100%">
       <tr>

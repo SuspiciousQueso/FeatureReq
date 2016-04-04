@@ -14,7 +14,7 @@ error_reporting(E_ALL);
 
   include('../app/db.Class.php');
   $r          = new DB();
-  $server = $r->server();
+  $server     = $r->server();
   $client     = $_GET['client'];
   $title      = $r->getClientReq($client)['title'];
   $targetDate = $r->getClientReq($client)['targetdate'];
@@ -38,7 +38,7 @@ error_reporting(E_ALL);
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>Open Tickets For <?php echo $converted; ?></h2>
-           <p>Below you will find an overview for all open requests. Click the link to follow for a specific ticket.</p>
+           <p>Below you will find an overview for all open requests. Click the links to individual tickets.</p>
      </div>
       <table style="width:100%">
         <tr>

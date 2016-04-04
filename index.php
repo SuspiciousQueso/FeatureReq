@@ -36,12 +36,12 @@
 		<h1><a href="<?php echo $r->server(); ?>">IWS Feature Request</a></h1>
 		<form class="request"  method="post" action="app/db.Process.php">
 					<div class="form_description">
-			         <h2>Welcome to the IWS Feature Request Form.</h2>
+			         <h2>Welcome to the IWS Feature Request System.</h2>
 			            <p>Please fill out the options below.</p>
 		      </div>
 		<ul >
       <li id="li_4" >
-		    <label class="description" for="client">Select Your Customer Name </label>
+		    <label class="description" for="client">Select Your Customers Name </label>
 		      <div>
 		          <select class="element select medium" id="client" name="client">
 			            <option value="" selected="selected"></option>

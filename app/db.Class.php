@@ -8,7 +8,7 @@
 -->
 <?php
 // Include database class
-include 'db.Creds.php';
+include 'db.Globals.php';
 class DB {
 
     private $dbh;
@@ -109,6 +109,13 @@ class DB {
       return $row;
     }
 
+    public function rotatePriority($client, $priority) {
+      $this->query("SELECT client, priority FROM request
+                    WHERE client = :client AND priority = :priority");
+      $this->bind(':client', $cleint);
+      $this->bind(':priority', $priority);
+
+    }
     public function getClientReq($client) {
       $this->query("SELECT * FROM request
                     WHERE client = :client");
@@ -196,7 +203,7 @@ class DB {
     }
 
     public function server() {
-      $server = $_SERVER['HTTP_HOST'];
+      $server = BASE_URL;
       return $server;
     }
 
