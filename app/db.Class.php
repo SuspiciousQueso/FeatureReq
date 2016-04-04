@@ -8,7 +8,7 @@
 -->
 <?php
 // Include Application Globals
-include 'db.Globals.php';
+include('db.Globals.php');
 
 // Declare main App class
 class DB {
@@ -18,7 +18,7 @@ class DB {
     private $error;
     private $priority;
     private $client;
-    private $req;
+    private $ticket;
     private $server;
     private $host      = DB_HOST;
     private $user      = DB_USER;
@@ -44,9 +44,9 @@ class DB {
         }
 
         // Get our values from url
-        if (isset($_GET['priority']) and isset($_GET['req'])) {
+        if (isset($_GET['priority']) and isset($_GET['ticket'])) {
           $this->priority = $_GET['priority'];
-          $this->req = $_GET['req'];
+          $this->ticket = $_GET['ticket'];
         }else{
           $this->priority = NULL;
           $this->req = NULL;
@@ -116,6 +116,8 @@ class DB {
                     WHERE client = :client AND priority = :priority");
       $this->bind(':client', $cleint);
       $this->bind(':priority', $priority);
+      $this->single();
+
 
     }
     public function getClientReq($client) {
