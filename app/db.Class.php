@@ -20,11 +20,12 @@ class DB {
     private $priority;
     private $client;
     private $req;
+    private $server;
     private $host      = DB_HOST;
     private $user      = DB_USER;
     private $pass      = DB_PASS;
     private $dbname    = DB_NAME;
-    private $server    = 'HTTP_HOST';
+
 
 
 
@@ -121,6 +122,14 @@ class DB {
       $row = $this->single();
       return $row;
     }
+
+    public function getDeveloper($ticket) {
+      $this->query("SELECT client, ticekt_number, developer FROM request
+                    WHERE ticket_number == :ticket");
+      $this->bind(':ticket', $ticket);
+      $row = $this->single();
+      return $row;
+    }
     // Used to count our rows from the query
     public function rowCount() {
         return $this->stmt->rowCount();
@@ -129,14 +138,6 @@ class DB {
     // Get the last inserted ID from the DB
     public function lastInsertId(){
         return $this->dbh->lastInsertId();
-    }
-
-    // Get the client priority int value.
-    public function clientPriority($priority) {
-      $this->query("SELECT priority FROM request WHERE priority = :priority");
-      $this->bind(':priority', $priority);
-      $row = $this->single();
-      return $row;
     }
 
     public function convertClient($client) {
@@ -156,7 +157,16 @@ class DB {
         return $client;
 
     }
+
+    public function assigned($assigned) {
+      if($assigned == 1) {
+        echo "No";
+      }else{
+        echo "Yes";
+      }
+    }
     public function pickDeveloper($dev) {
+               
       switch($dev){
         case 1:
           $dev = "Billy R Baldwin";
@@ -174,6 +184,11 @@ class DB {
           $dev = "None Assigned";
       }
       return $dev;
+    }
+
+    public function server() {
+      $server = $_SERVER['HTTP_HOST'];
+      return $server;
     }
 
 }

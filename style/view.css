@@ -74,16 +74,18 @@ h1
 	min-height:0;
 	padding:0;
 	text-decoration:none;
-	text-indent:-8000px;
+	/*text-indent:-8000px; */
 
 }
 
-h1 a
+h1 a:link
 {
-
+	color:#fffafa;
 	display:block;
 	min-height:40px;
 	overflow:hidden;
+	text-decoration: none;
+
 }
 
 
