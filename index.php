@@ -4,12 +4,12 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
 <?php
   include('app/db.Class.php');
+  require("app/req.Functions.php");
   $r = new DB();
-  $dev = rand(1, 4);
   $createdDate = date('Y-m-d');
 ?>
 
@@ -34,7 +34,7 @@
 <img id="top" src="images/top.png" alt="">
 	<div id="form_container">
 		<h1><a href="<?php echo $r->server(); ?>">IWS Feature Request</a></h1>
-		<form class="request"  method="post" action="app/db.Process.php">
+		<form class="request"  method="post" action="models/req.Process.php">
 					<div class="form_description">
 			         <h2>Welcome to the IWS Feature Request System.</h2>
 			            <p>Please fill out the options below.</p>

@@ -4,11 +4,10 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
 <?php
-require("db.Class.php");
-
+require("../app/db.Class.php");
 if(isset($_POST['submit'])) {
   $db = new DB();
   $server = $db->server();
@@ -19,7 +18,7 @@ if(isset($_POST['submit'])) {
       $db->execute();
       $client    =  $_POST['client'];
       $ticket    =  $_POST['ticket'];
-      header("Location: http://$server/views/req.ticket.php?client=$client&ticket=$ticket");
+      header("Location: http://$server/views/req.client.php?client=$client&ticket=$ticket&priority=1");
     }else{
       echo "Somethings not right";
 

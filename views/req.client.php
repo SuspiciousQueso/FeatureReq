@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
 <?php
 if(isset($_GET['ticket']) && isset($_GET['client'])){
@@ -16,15 +16,11 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
   $r          = new DB();
   $server     = $r->server();
   $client     = $_GET['client'];
-  $title      = $r->getClientReq($client)['title'];
-  $targetDate = $r->getClientReq($client)['targetdate'];
-  $ticket     = $r->getClientReq($client)['ticket_number'];
-  $assigned   = $r->getClientReq($client)['assigned'];
-  $developer  = $r->getClientReq($client)['developer'];
-  $created    = $r->getClientReq($client)['created_date'];
-  $assignedTo = $r->pickDeveloper($developer);
+  $ticket     = $_GET['ticket'];
+  $query      = $r->getClientReq($client, $ticket);
+  $assignedTo = $r->getDeveloper($client);
   $converted  = $r->convertClient($client);
-  $status     = $r->assigned($assigned);
+  $assigned = $query['assigned'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -56,11 +52,19 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
             <th>Date Expected</th>
         </tr>
         <tr>
-          <td><?php echo $title;?></a></td>
-          <td><?php echo $ticket;?></td>
-          <td><?php echo $status;?></td>
-          <td><?php echo $created; ?></td>
-          <td><?php echo $targetDate; ?></td>
+          <td><?php echo $query['title'];?></a></td>
+          <td><?php echo $query['ticket_number'];?></td>
+          <td><?php
+
+                  if($assigned == 0) {
+                    echo "No";
+                  }elseif($assigned == 1){
+                    echo "Yes";
+                  }
+                ?>
+          </td>
+          <td><?php echo $query['created_date']; ?></td>
+          <td><?php echo $query['targetdate']; ?></td>
         </tr>
       </table>
    </div>
@@ -68,4 +72,53 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
  <img id="bottom" src="../images/bottom.png" alt="">
 </body>
 </html>
-<?php } ?>
+<?php }elseif(isset($_POST['submit']) && isset($_GET['priority'])) { ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>IWS Feature Request</title>
+<link rel="stylesheet" type="text/css" href="../style/view.css" media="all">
+ </head>
+<body id="main_body" >
+
+ <img id="top" src="../images/top.png" alt="">
+ <div id="form_container">
+   <h1><a href="<?php echo $server;?>">IWS Feature Request</a></h1>
+   <form class="request"  method="post" action="">
+     <div class="form_description">
+        <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
+           <p>Ticket number <?php echo $ticket; ?>, is NOW assigned to <?php echo $assignedTo; ?>
+          </p>
+     </div>
+      <table style="width:100%">
+        <tr>
+            <th>Feature Title</th>
+            <th>Ticket Number</th>
+            <th>Assigned</th>
+            <th>Date Created</th>
+            <th>Date Expected</th>
+        </tr>
+        <tr>
+          <td><?php echo $query['title'];?></a></td>
+          <td><?php echo $query['ticket_number'];?></td>
+          <td><?php
+
+                  if($assigned == 0) {
+                    echo "No";
+                  }elseif($assigned == 1){
+                    echo "Yes";
+                  }
+                ?>
+          </td>
+          <td><?php echo $query['created_date']; ?></td>
+          <td><?php echo $query['targetdate']; ?></td>
+        </tr>
+      </table>
+   </div>
+ </form>
+ <img id="bottom" src="../images/bottom.png" alt="">
+</body>
+</html>
+
+ <?php } ?>

@@ -4,11 +4,11 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
 <?php
 // Include Application Globals
-include('db.Globals.php');
+include('db.Config.php');
 
 // Declare main App class
 class DB {
@@ -102,35 +102,50 @@ class DB {
     $this->stmt->bindValue($param, $value, $type);
     }
 
+    // Used to count our rows from the query
+    public function rowCount() {
+        return $this->stmt->rowCount();
+    }
+
+    // Get the last inserted ID from the DB
+    public function lastInsertId(){
+        return $this->dbh->lastInsertId();
+    }
+
+    /** Application Queries **/
+
     //Used to get our req ID and load it to the UI
     public function processReq($req) {
-      $this->query("SELECT id, title, client, priority, ticketurl, targetdate FROM request
+      $this->query("SELECT * FROM request
                     WHERE id = :req");
       $this->bind(':req', $req);
       $row = $this->single();
       return $row;
     }
-
+    // Used to Rotate our priority numbers for each client
     public function rotatePriority($client, $priority) {
       $this->query("SELECT client, priority FROM request
                     WHERE client = :client AND priority = :priority");
-      $this->bind(':client', $cleint);
+      $this->bind(':client', $client);
       $this->bind(':priority', $priority);
-      $this->single();
-
+      $row = $this->single();
+      return $row;
 
     }
-    public function getClientReq($client) {
+
+    public function getClientReq($client, $ticket) {
       $this->query("SELECT * FROM request
-                    WHERE client = :client");
+                    WHERE client = :client
+                    AND ticket_number = :ticket");
       $this->bind(':client', $client);
+      $this->bind(':ticket', $ticket);
       $row = $this->single();
       return $row;
     }
 
-    public function getTickets($client) {
+    public function getTickets($c) {
       $this->query("SELECT * FROM request WHERE client = :client");
-      $this->bind(':client', $client);
+      $this->bind(':client', $c);
       $row = $this->resultset();
       return $row;
 
@@ -144,69 +159,34 @@ class DB {
       return $row;
     }
 
-    public function getAssigned($assigned) {
-      $this->query("SELECT assigned FROM request
-                    WHERE assigned = :assigned");
-      $this->bind(':assigned', $assigned);
-      $this->single();
-      if($assigned == 0) {
-        echo "No";
-        return $assigned;
-      }elseif($assigned == 1){
-        echo "Yes";
-        return $assigned;
-      }
-
-    }
-    // Used to count our rows from the query
-    public function rowCount() {
-        return $this->stmt->rowCount();
-    }
-
-    // Get the last inserted ID from the DB
-    public function lastInsertId(){
-        return $this->dbh->lastInsertId();
-    }
 
     public function convertClient($client) {
-      switch ($client) {
-        case 0:
-          $client = "Client A";
-          break;
-        case 1:
-          $client = "Client B";
-          break;
-        case 2:
-          $client = "Client C";
-          break;
-        default:
-          echo "No client selected";
-        }
-        return $client;
+      $this->query("SELECT clientid, clientname FROM clients
+                    WHERE clientid = :client ");
+      $this->bind(':client', $client);
+      $row = $this->single()['clientname'];
+      return $row;
 
     }
+    public function pickDeveloper(){
+      $this->query("SELECT * FROM developer");
+      $rows = $this->resultset();
+      return $rows;
+    }
 
-    public function pickDeveloper($dev) {
-
-      switch($dev){
-        case 1:
-          $dev = "Billy R Baldwin";
-          break;
-        case 2:
-          $dev = "Robert Heinlein";
-          break;
-        case 3:
-          $dev = "Superman Jones";
-          break;
-        case 4:
-          $dev = "Harry Potter";
-          break;
-        default:
-          $dev = "None Assigned";
+    public function showDeveloper($dev) {
+      $this->query("SELECT devid, devname FROM developer
+                    WHERE devid = :dev ");
+      $this->bind(':dev', $dev);
+      $row = $this->single()['devname'];
+      return $row;
       }
-      return $dev;
+    public function getURL($ticket) {
+      $this->query("SELECT ticketurl FROM request
+                    WHERE ticket_number = :ticket ");
+      $this->bind(':ticket', $ticket);
+      $row = $this->single()['ticketurl'];
     }
-
     public function server() {
       $server = $_SERVER['SERVER_NAME'];
       return $server;

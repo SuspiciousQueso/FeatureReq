@@ -4,8 +4,36 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
+<select class="element select medium" id="developer" name="developer">
+    <option value="" selected="selected"></option>
+    <option value="1" >Billy R Baldwin</option>
+    <option value="2" >Robert Heinlein</option>
+    <option value="3" >Superman Jones</option>
+    <option value="4" >Harry Potter</option>
+</select>
+
+<?php
+$num_of_ids = 10000;
+$i = 0;
+$n = 0;
+$l = "IWSA";
+
+while ($i <= $num_of_ids) {
+    $id = $l . sprintf("%04d", $n);
+    echo $id;
+
+    if ($n == 9999) {
+        $n = 0;
+        $l++;
+    }
+
+    $i++; $n++;
+}
+
+ ?>
+
 public function insert($table, $fields = array()) {
     $keys   = array_keys($fields);
     $values = null;

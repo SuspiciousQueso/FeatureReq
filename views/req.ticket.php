@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-04-2016
+@Last modified time: 04-05-2016
 -->
 <?php
 ini_set('display_errors', 1);
@@ -14,9 +14,9 @@ include('../app/db.Class.php');
 
 $r = new DB();
 $server   = $r->server();
-$req      = $_GET["req"];
-$priority = $_GET["priority"];
+$ticket   = $_GET["ticket"];
 $c        = $_GET["client"];
+$info     = $r->getClientReq($c, $ticket);
 $client   = $r->convertClient($c);
 
 //$ticket   = $_GET['ticket'];
@@ -49,10 +49,10 @@ $client   = $r->convertClient($c);
 
      <tr>
         <td><?php echo $r->convertClient($client);?></a></td>
-        <td><?php echo $r->processReq($req)['title']; ?></td>
-        <td><?php echo $r->processReq($req)['priority']; ?></td>
-        <td><?php echo $r->processReq($req)['targetdate'];?></td>
-        <td><a href="<?php echo "http://$server/views/req.tickets.php?client=$c"; ?>">Open Tickets</a></td>
+        <td><?php echo $info['title']; ?></td>
+        <td><?php echo $info['priority']; ?></td>
+        <td><?php echo $info['targetdate'];?></td>
+        <td><a href="<?php echo "http://$server/views/req.ticketlist.php?client=$c"; ?>">Open Tickets</a></td>
       </tr>
 
 
