@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
       $db->execute();
       $client    =  $_POST['client'];
       $ticket    =  $_POST['ticket'];
-      header("Location: http://$server/views/req.client.php?client=$client&ticket=$ticket&priority=1");
+      header("Location: http://$server/views/req.assigned.php?client=$client&ticket=$ticket&priority=1");
     }else{
       echo "Somethings not right";
 

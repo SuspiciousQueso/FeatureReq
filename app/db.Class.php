@@ -151,15 +151,6 @@ class DB {
 
     }
 
-    public function getDeveloper($ticket) {
-      $this->query("SELECT client, ticket_number, developer FROM request
-                    WHERE ticket_number = :ticket");
-      $this->bind(':ticket', $ticket);
-      $row = $this->single();
-      return $row;
-    }
-
-
     public function convertClient($client) {
       $this->query("SELECT clientid, clientname FROM clients
                     WHERE clientid = :client ");
@@ -187,9 +178,31 @@ class DB {
       $this->bind(':ticket', $ticket);
       $row = $this->single()['ticketurl'];
     }
+
+    public function convertPriority($priority   ) {
+      $this->query("SELECT priority from request
+                    WHERE priority = :priority");
+        $this->bind(':priority', $priority);
+        $row = $this->single();
+        return $row;
+    }
+
+
+    /** Process functions for valuation of objects and methods **/
     public function server() {
       $server = $_SERVER['SERVER_NAME'];
       return $server;
+    }
+
+    public function checkAssigned($check){
+      $checkY = "Yes";
+      $checkN = "No";
+      if($check == 0) {
+        return $checkN;
+      }elseif($check == 1){
+        return $checkY;
+      }
+
     }
 
 }

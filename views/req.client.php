@@ -13,14 +13,14 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
   error_reporting(E_ALL);
 
   include('../app/db.Class.php');
-  $r          = new DB();
-  $server     = $r->server();
-  $client     = $_GET['client'];
-  $ticket     = $_GET['ticket'];
-  $query      = $r->getClientReq($client, $ticket);
-  $assignedTo = $r->getDeveloper($client);
-  $converted  = $r->convertClient($client);
-  $assigned = $query['assigned'];
+  $r            = new DB();
+  $server       = $r->server();
+  $client       = $_GET['client'];
+  $ticket       = $_GET['ticket'];
+  $query        = $r->getClientReq($client, $ticket);
+  $assignedTo   = $r->showDeveloper($client);
+  $converted    = $r->convertClient($client);
+  $isassigned   = $query['assigned'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,7 +37,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
-           <p>Ticket number <?php echo $ticket; ?>, is currently <?php if($assigned == 0){?> not assigned.
+           <p>Ticket number <?php echo $ticket; ?>, is currently <?php if($isassigned == "0"){?> not assigned.
              Click <a href="<?php echo "http://$server/views/req.assign.php?ticket=$ticket&client=$client";?>">
                here</a> to assign the ticket.
             <?php }else{ ?> assigned to <?php echo $assignedTo; }?>
@@ -54,15 +54,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
         <tr>
           <td><?php echo $query['title'];?></a></td>
           <td><?php echo $query['ticket_number'];?></td>
-          <td><?php
-
-                  if($assigned == 0) {
-                    echo "No";
-                  }elseif($assigned == 1){
-                    echo "Yes";
-                  }
-                ?>
-          </td>
+          <td><?php echo $assignedTo;?></td>
           <td><?php echo $query['created_date']; ?></td>
           <td><?php echo $query['targetdate']; ?></td>
         </tr>
@@ -72,53 +64,4 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
  <img id="bottom" src="../images/bottom.png" alt="">
 </body>
 </html>
-<?php }elseif(isset($_POST['submit']) && isset($_GET['priority'])) { ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>IWS Feature Request</title>
-<link rel="stylesheet" type="text/css" href="../style/view.css" media="all">
- </head>
-<body id="main_body" >
-
- <img id="top" src="../images/top.png" alt="">
- <div id="form_container">
-   <h1><a href="<?php echo $server;?>">IWS Feature Request</a></h1>
-   <form class="request"  method="post" action="">
-     <div class="form_description">
-        <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
-           <p>Ticket number <?php echo $ticket; ?>, is NOW assigned to <?php echo $assignedTo; ?>
-          </p>
-     </div>
-      <table style="width:100%">
-        <tr>
-            <th>Feature Title</th>
-            <th>Ticket Number</th>
-            <th>Assigned</th>
-            <th>Date Created</th>
-            <th>Date Expected</th>
-        </tr>
-        <tr>
-          <td><?php echo $query['title'];?></a></td>
-          <td><?php echo $query['ticket_number'];?></td>
-          <td><?php
-
-                  if($assigned == 0) {
-                    echo "No";
-                  }elseif($assigned == 1){
-                    echo "Yes";
-                  }
-                ?>
-          </td>
-          <td><?php echo $query['created_date']; ?></td>
-          <td><?php echo $query['targetdate']; ?></td>
-        </tr>
-      </table>
-   </div>
- </form>
- <img id="bottom" src="../images/bottom.png" alt="">
-</body>
-</html>
-
- <?php } ?>
+<?php } ?>

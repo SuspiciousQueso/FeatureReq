@@ -8,7 +8,6 @@
 -->
 <?php
   include('app/db.Class.php');
-  require("app/req.Functions.php");
   $r = new DB();
   $createdDate = date('Y-m-d');
 ?>
@@ -72,10 +71,9 @@
             <div>
               <select class="element select medium" is="priority" name="priority">
                 <option value="" selected="selected"></option>
-                <option value="1">Priority High</option>
-                <option value="2">Priority Medium</option>
-                <option value="3">Priority Low</option>
-                <option value="4">Priority Long Term</option>
+                <option value="1">High</option>
+                <option value="2">Medium</option>
+                <option value="3">Low</option>
               </select>
             </div>
           <p class="guidelines" id="guide_6"><small>Select your priority for the request.</small></p>
@@ -91,10 +89,10 @@
 		<div>
 		<select class="element select medium" id="product" name="product">
 			<option value="" selected="selected"></option>
-			<option value="Policies" >Policies</option>
-			<option value="Billing" >Billing</option>
-			<option value="Claims" >Claims</option>
-			<option value="Reports" >Reports</option>
+			<option value="Policies">Policies</option>
+			<option value="Billing">Billing</option>
+			<option value="Claims">Claims</option>
+			<option value="Reports">Reports</option>
 
 		</select>
 		</div><p class="guidelines" id="guide_5"><small>Please indicate what product this feature is intended for. </small></p>
