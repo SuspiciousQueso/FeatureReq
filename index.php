@@ -10,6 +10,7 @@
   include('app/db.Class.php');
   $r = new DB();
   $server = $r->server();
+
   $createdDate = date('Y-m-d');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,6 +42,7 @@
 
             <?php  foreach($r->listTickets() as $res) {
                     $clientname = $r->convertClient($res['client']);
+                    $c = $res['client'];
                     ?>
                     <tr>
                       <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['ticket_number'];?></a></td>
