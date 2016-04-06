@@ -125,6 +125,20 @@ class DB {
       return $row;
     }
 
+    public function listTickets(){
+      $this->query("SELECT * FROM request
+                    WHERE assigned = 0");
+      $rows = $this->resultset();
+      return $rows;
+    }
+
+    public function pastDueTickets(){
+      $this->query("SELECT * FROM request
+                    WHERE targetdate <= CURDATE()");
+      $rows = $this->resultset();
+      return $rows;
+
+    }
     // Used to Rotate our priority numbers for each client
     public function getPriority($client, $priority) {
       $this->query("SELECT client, priority, targetdate FROM request
@@ -211,24 +225,6 @@ class DB {
 
     public function rotatePriority($priority, $client){
 
-      $rot = $this->getPriority($client, $priority);
-      switch ($priority) {
-        case if($priority == 1){
-          $this->query("UPDATE request SET priority = 2
-                        WHERE :priority = 1 AND targetdate
-                        >= CURDATE()");
-        }:
-
-          break;
-
-        case '':
-
-          break;
-
-        default:
-
-          break;
-      }
     }
 
 }

@@ -18,11 +18,11 @@ include('../app/db.Class.php');
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>IWS Feature Request</title>
-<link rel="stylesheet" type="text/css" href="../style/view.css" media="all">
+<link rel="stylesheet" type="text/css" href="style/view.css" media="all">
  </head>
 <body id="main_body" >
 
- <img id="top" src="../images/top.png" alt="">
+ <img id="top" src="images/top.png" alt="">
  <div id="form_container">
    <h1><a href="<?php echo "http://$server"; ?>">IWS Feature Request</a></h1>
    <form class="request"  method="post" action="">
@@ -56,6 +56,6 @@ include('../app/db.Class.php');
       Or click <a href="<?php echo "http://$server/index.php";?>">here</a> to return home.
    </div>
  </form>
- <img id="bottom" src="../images/bottom.png" alt="">
+ <img id="bottom" src="images/bottom.png" alt="">
 </body>
 </html>
