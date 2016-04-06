@@ -43,6 +43,7 @@
             <?php  foreach($r->listTickets() as $res) {
                     $clientname = $r->convertClient($res['client']);
                     $c = $res['client'];
+                    $ticketnum =$res['ticket_number'];
                     ?>
                     <tr>
                       <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['ticket_number'];?></a></td>
