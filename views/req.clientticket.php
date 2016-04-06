@@ -8,10 +8,6 @@
 -->
 <?php
 if(isset($_GET['ticket']) && isset($_GET['client'])){
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
-
   include('../app/db.Class.php');
   $r            = new DB();
   $server       = $r->server();

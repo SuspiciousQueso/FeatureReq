@@ -4,12 +4,9 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-05-2016
+@Last modified time: 04-06-2016
 -->
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 include('../app/db.Class.php');
   $r          = new DB();
   $server     = $r->server();
@@ -31,7 +28,7 @@ include('../app/db.Class.php');
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>Open Tickets For <?php echo $converted; ?></h2>
-           <p>Below you will find an overview for all open requests. Click the links to individual tickets.</p>
+           <p>Below you will find an overview for all open requests. Click the links to view your individual tickets.</p>
      </div>
       <table style="width:100%">
         <tr>
@@ -56,7 +53,7 @@ include('../app/db.Class.php');
       </table>
       <br />
       <br />
-      Or click <a href="<?php echo "http://$server/index.php";?>">here</a> to return to the form. 
+      Or click <a href="<?php echo "http://$server/index.php";?>">here</a> to return home.
    </div>
  </form>
  <img id="bottom" src="../images/bottom.png" alt="">

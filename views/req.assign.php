@@ -8,8 +8,6 @@
 -->
 <?php
 if(isset($_GET['ticket'])) {
-
-
   include('../app/db.Class.php');
   $r          = new DB();
   $server     = $r->server();

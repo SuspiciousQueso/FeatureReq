@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-05-2016
+@Last modified time: 04-06-2016
 -->
 <?php
 // Include Application Globals
@@ -112,7 +112,9 @@ class DB {
         return $this->dbh->lastInsertId();
     }
 
-    /** Application Queries **/
+    /***********************************
+    **   Application Queries          **
+    ***********************************/
 
     //Used to get our req ID and load it to the UI
     public function processReq($req) {
@@ -122,17 +124,18 @@ class DB {
       $row = $this->single();
       return $row;
     }
+
     // Used to Rotate our priority numbers for each client
     public function getPriority($client, $priority) {
-      $this->query("SELECT client, priority FROM request
+      $this->query("SELECT client, priority, targetdate FROM request
                     WHERE client = :client AND priority = :priority");
       $this->bind(':client', $client);
       $this->bind(':priority', $priority);
       $row = $this->single();
       return $row;
-
     }
 
+    // Used to get all data and return a single value from the request table
     public function getClientReq($client, $ticket) {
       $this->query("SELECT * FROM request
                     WHERE client = :client
@@ -143,14 +146,17 @@ class DB {
       return $row;
     }
 
+    // Used to select an array of client tickets
     public function getTickets($c) {
-      $this->query("SELECT * FROM request WHERE client = :client");
+      $this->query("SELECT client, title, ticket_number, priority, assigned, created_date
+                    FROM request WHERE client = :client");
       $this->bind(':client', $c);
       $row = $this->resultset();
       return $row;
 
     }
 
+    // Used to convert client ID from INT value to it's Sting
     public function convertClient($client) {
       $this->query("SELECT clientid, clientname FROM clients
                     WHERE clientid = :client ");
@@ -159,6 +165,8 @@ class DB {
       return $row;
 
     }
+
+    // Used to populate a drop-down menu of developers
     public function pickDeveloper(){
       $this->query("SELECT * FROM developer");
       $rows = $this->resultset();
@@ -179,21 +187,16 @@ class DB {
       $row = $this->single()['ticketurl'];
     }
 
-    public function convertPriority($priority) {
-      $this->query("SELECT priority from request
-                    WHERE priority = :priority");
-        $this->bind(':priority', $priority);
-        $row = $this->single();
-        return $row;
-    }
-
 
     /** Process functions for valuation of objects and methods **/
+
+    // Populate server name variable
     public function server() {
       $server = $_SERVER['SERVER_NAME'];
       return $server;
     }
 
+    // Used to see if a ticket for a client is assigned, and return a string value.
     public function checkAssigned($check){
       $checkY = "Yes";
       $checkN = "No";
@@ -203,6 +206,29 @@ class DB {
         return $checkY;
       }
 
+    }
+
+
+    public function rotatePriority($priority, $client){
+
+      $rot = $this->getPriority($client, $priority);
+      switch ($priority) {
+        case if($priority == 1){
+          $this->query("UPDATE request SET priority = 2
+                        WHERE :priority = 1 AND targetdate
+                        >= CURDATE()");
+        }:
+
+          break;
+
+        case '':
+
+          break;
+
+        default:
+
+          break;
+      }
     }
 
 }

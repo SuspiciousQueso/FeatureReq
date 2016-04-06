@@ -7,7 +7,6 @@
 @Last modified time: 04-05-2016
 -->
 <?php
-//print_r($_POST);
 require("../app/db.Class.php");
 $db = new DB();
 $server = $db->server();
