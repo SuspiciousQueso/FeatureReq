@@ -87,28 +87,20 @@
                     <tr>
                         <td><a href="<?php echo "http://$server/views/req.form.php"?>"</a>Request Form</td>
                         <td>
-                          <script type="text/javascript">
-                              <!--//
-                                  change(val) {
-                                  document.clientselect.action = "http://<?php $server;?>/views/req.ticketlist.php?client="+val;}
-                                  //-->
-                          </script>
-                          <form id="clientselect" method="post" name="clientselect" action=http://<?php $server;?>/views/req.ticketlist.php?client='' target="_self" >
-                            <select onChange="change(this.value)" class="element select medium" id="client" name="client" >
+                          <form id="clientselect" method="post" name="clientselect" action="" target="" >
+                            <select class="element select medium" id="client" name="client" >
               			            <option value="3" selected="selected">Choose client</option>
               			            <option value="0" >Client A</option>
               			            <option value="1" >Client B</option>
               			            <option value="2" >Client C</option>
                             </select>
                             <li class="buttons">
-                            <input id="createdDate" type="hidden" name="" value="" />
                             <input id="pickclient" class="button_text" type="submit" name="submit" value="Submit" />
                         </td>
                         <td><a href="">Admin Login</a></td>
-                    </tr>
-	        </div>
-
-		</form>
+                      </tr>
+              </div>
+        </form>
 	</div>
 	<!-- <img id="bottom" src="views/images/bottom.png" alt=""> -->
 	</body>

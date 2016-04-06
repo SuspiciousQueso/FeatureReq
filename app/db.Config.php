@@ -7,13 +7,11 @@
 @Last modified time: 04-06-2016
 -->
 <?php
-  
-    //Define AWS EB instance configuration
-    define("DB_HOST", "featurereq.cjuto6cbmgfi.us-west-2.rds.amazonaws.com");
-    define("DB_USER", "brbaldwin");
+    // Define local dev configuration
+    define("DB_HOST", "localhost");
+    define("DB_USER", "root");
     define("DB_PASS", "!iG00gl311!");
     define("DB_NAME", "featurereq");
-
-
+    define('BASE_URL', 'HTTP_TYPE' . "://" . 'HTTP_ROOT' . substr(__DIR__, strlen($_SERVER[ 'DOCUMENT_ROOT'])) . '/');
 
 ?>

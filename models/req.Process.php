@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-05-2016
+@Last modified time: 04-06-2016
 -->
 <?php
 require("../app/db.Class.php");
@@ -12,6 +12,8 @@ $db = new DB();
 $server = $db->server();
 // Instantiate DB class, and insert data from form.
 if(isset($_POST["submit"])){
+  $client = $_POST['client'];
+  $priority = $_POST['priority'];
     // Insert into request tabel our Feature Request information
     $db->query("INSERT INTO request (title, description, client, priority, targetdate, product, created_date)
     VALUES (:title, :description, :client, :priority, :targetdate, :product, :created_date)");
@@ -36,6 +38,8 @@ if(isset($_POST["submit"])){
       $db->bind(':url', $url);
       $db->bind(':last', $last);
       $db->execute();
+      // Rotate priority for client.
+      $db->rotatePriority($client, $priority);
       header("Location: $url" );
       }else{
         echo "Something went wrong!";

@@ -224,11 +224,19 @@ class DB {
 
 
     public function rotatePriority($priority, $client){
-
+      $pr = $priority;
+      $c  = $client;
+      $this->query("UPDATE request
+        SET priority = CASE priority  WHEN 1 THEN 2
+                        WHEN 2 THEN 3
+                        ELSE priority
+                        END
+                WHERE priority = :priority AND client = :client");
+      $this->bind(':priority', $priority);
+      $this->bind(':client', $client);
+      $this->execute();
     }
-
 }
-
 
 
 ?>
