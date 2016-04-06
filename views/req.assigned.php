@@ -13,7 +13,8 @@ $server     = $r->server();
 $client     = $_GET['client'];
 $ticket     = $_GET['ticket'];
 $query      = $r->getClientReq($client, $ticket);
-$assignedTo = $r->showDeveloper($client);
+$dev        = $query['developer'];
+$assignedTo = $r->showDeveloper($dev);
 $converted  = $r->convertClient($client);
 $assigned = $query['assigned'];
 ?>
@@ -30,11 +31,11 @@ $assigned = $query['assigned'];
    <h1><a href="">IWS Feature Request</a></h1>
    <form class="request"  >
      <div class="form_description">
-        <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?> is NOW assigned to <?php echo $assignedTo; ?></h2>
+        <h2>Ticket# <?php echo $ticket; ?> for <?php echo $converted; ?> is NOW assigned to developer: <br /> <?php echo $assignedTo; ?></h2>
      </div>
       <table style="width:100%">
         <tr>
-            <th>Feature Title</th>
+            <th>Title</th>
             <th>Ticket Number</th>
             <th>Priority</th>
             <th>Date Created</th>
@@ -48,7 +49,9 @@ $assigned = $query['assigned'];
           <td><?php echo $query['targetdate']; ?></td>
         </tr>
       </table>
-			Click <a href="<?php echo "http://$server/index.php"?>">Here To Return Home</a>
+			<br />
+			<br />
+			Click <a href="<?php echo "http://$server/views/req.ticketlist.php?client=$client"?>">Here</a> To Return To Ticket List for <?php echo $converted;?>
    </div>
  </form>
  <img id="bottom" src="../images/bottom.png" alt="">

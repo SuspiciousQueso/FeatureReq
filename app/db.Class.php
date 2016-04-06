@@ -179,7 +179,7 @@ class DB {
       $row = $this->single()['ticketurl'];
     }
 
-    public function convertPriority($priority   ) {
+    public function convertPriority($priority) {
       $this->query("SELECT priority from request
                     WHERE priority = :priority");
         $this->bind(':priority', $priority);

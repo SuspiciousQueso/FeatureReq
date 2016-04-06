@@ -37,6 +37,7 @@ include('../app/db.Class.php');
         <tr>
           <th>Feature Title</th>
           <th>Ticket Number</th>
+          <th>Priority</th>
           <th>Assigned</th>
           <th>Date Created</th>
         </tr>
@@ -45,22 +46,17 @@ include('../app/db.Class.php');
         $ticketnum = $res['ticket_number'];
         ?>
         <tr>
-          <td><a href="<?php echo "http://$server/views/req.client.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['title'];?></a></td>
+          <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['title'];?></a></td>
           <td><?php echo $res['ticket_number']; ?></td>
-          <td><?php
-                  $assigned= $res["assigned"];
-                  if($assigned == 0) {
-                    echo "No";
-                  }elseif($assigned == 1){
-                    echo "Yes";
-                  }
-                ?>
-          </td>
+          <td><?php echo $res['priority'];?></td>
+          <td><?php echo $r->checkAssigned($res['assigned']);?></td>
           <td><?php echo $res['created_date']; ?></td>
         </tr>
-<?php    } ?>
-
+<?php } ?>
       </table>
+      <br />
+      <br />
+      Or click <a href="<?php echo "http://$server/index.php";?>">here</a> to return to the form. 
    </div>
  </form>
  <img id="bottom" src="../images/bottom.png" alt="">

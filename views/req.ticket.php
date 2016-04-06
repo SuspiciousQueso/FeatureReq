@@ -35,8 +35,8 @@ $client   = $r->convertClient($c);
     <h1><a href="<?php echo "http://$server/"; ?>">IWS Feature Request</a></h1>
 		<form class="request"  method="post" action="">
 					<div class="form_description">
-			         <h2>Thank you, your request has been processed. Please see the details below.</h2>
-			          <p>Click on the link below to track all open tickets for <?php echo $client;?>.</p>
+			         <h2>Thank you, your request has been processed.</h2>
+			          <p>Click on the link below to track all open tickets for client <?php echo $client;?>.</p>
 		</div>
     <table style="width:100%">
       <tr>
@@ -44,7 +44,7 @@ $client   = $r->convertClient($c);
         <th>Request Title</th>
         <th>Priority</th>
         <th>Expected Date</th>
-        <th>Ticket Tracking URL</th>
+        <th>Track Open Tickets</th>
       </tr>
 
      <tr>

@@ -18,7 +18,8 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
   $client       = $_GET['client'];
   $ticket       = $_GET['ticket'];
   $query        = $r->getClientReq($client, $ticket);
-  $assignedTo   = $r->showDeveloper($client);
+  $dev          = $query['developer'];
+  $assignedTo   = $r->showDeveloper($dev);
   $converted    = $r->convertClient($client);
   $isassigned   = $query['assigned'];
 ?>
@@ -37,8 +38,8 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
    <form class="request"  method="post" action="">
      <div class="form_description">
         <h2>Ticket <?php echo $ticket; ?> For <?php echo $converted; ?></h2>
-           <p>Ticket number <?php echo $ticket; ?>, is currently <?php if($isassigned == "0"){?> not assigned.
-             Click <a href="<?php echo "http://$server/views/req.assign.php?ticket=$ticket&client=$client";?>">
+           <p>This ticket is currently <?php if($isassigned == 0){ ?> not assigned.
+              Click <a href="<?php echo "http://$server/views/req.assign.php?ticket=$ticket&client=$client";?>">
                here</a> to assign the ticket.
             <?php }else{ ?> assigned to <?php echo $assignedTo; }?>
           </p>
@@ -54,7 +55,7 @@ if(isset($_GET['ticket']) && isset($_GET['client'])){
         <tr>
           <td><?php echo $query['title'];?></a></td>
           <td><?php echo $query['ticket_number'];?></td>
-          <td><?php echo $assignedTo;?></td>
+          <td><?php echo $r->checkAssigned($isassigned);?></td>
           <td><?php echo $query['created_date']; ?></td>
           <td><?php echo $query['targetdate']; ?></td>
         </tr>
