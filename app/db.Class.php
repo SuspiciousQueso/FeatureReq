@@ -123,7 +123,7 @@ class DB {
       return $row;
     }
     // Used to Rotate our priority numbers for each client
-    public function rotatePriority($client, $priority) {
+    public function getPriority($client, $priority) {
       $this->query("SELECT client, priority FROM request
                     WHERE client = :client AND priority = :priority");
       $this->bind(':client', $client);

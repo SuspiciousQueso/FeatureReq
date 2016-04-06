@@ -42,7 +42,7 @@ $client   = $r->convertClient($c);
       <tr>
         <th>Customer Name</th>
         <th>Request Title</th>
-        <th>Priority</th>
+        <th>Product</th>
         <th>Expected Date</th>
         <th>Track Open Tickets</th>
       </tr>
@@ -50,7 +50,7 @@ $client   = $r->convertClient($c);
      <tr>
         <td><?php echo $r->convertClient($client);?></a></td>
         <td><?php echo $info['title']; ?></td>
-        <td><?php echo $info['priority']; ?></td>
+        <td><?php echo $info['product']; ?></td>
         <td><?php echo $info['targetdate'];?></td>
         <td><a href="<?php echo "http://$server/views/req.ticketlist.php?client=$c"; ?>">Open Tickets</a></td>
       </tr>
