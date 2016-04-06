@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-05-2016
+@Last modified time: 04-06-2016
 -->
 <?php /** Assignment update retun **/
 include('../app/db.Class.php');
@@ -23,10 +23,10 @@ $assigned = $query['assigned'];
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>IWS Feature Request</title>
-<link rel="stylesheet" type="text/css" href="../style/view.css" media="all">
+<link rel="stylesheet" type="text/css" href="style/view.css" media="all">
  </head>
 <body id="main_body" >
- <img id="top" src="../images/top.png" alt="">
+ <img id="top" src="images/top.png" alt="">
  <div id="form_container">
    <h1><a href="">IWS Feature Request</a></h1>
    <form class="request"  >
@@ -54,6 +54,6 @@ $assigned = $query['assigned'];
 			Click <a href="<?php echo "http://$server/views/req.ticketlist.php?client=$client"?>">Here</a> To Return To Ticket List for <?php echo $converted;?>
    </div>
  </form>
- <img id="bottom" src="../images/bottom.png" alt="">
+ <img id="bottom" src="images/bottom.png" alt="">
 </body>
 </html>
