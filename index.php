@@ -4,14 +4,13 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-06-2016
+@Last modified time: 04-07-2016
 -->
 <?php
   include('app/db.Class.php');
   $r = new DB();
   $server = $r->server();
 
-  $createdDate = date('Y-m-d');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -60,7 +59,7 @@
                         <th>Ticket Number</th>
                         <th>Assigned To</th>
                         <th>Client Name</th>
-                        <th>Date Created</th>
+                        <th>Target Date</th>
                     </tr>
 
             <?php  foreach($r->pastDueTickets() as $res) {
@@ -71,7 +70,7 @@
                       <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['ticket_number'];?></a></td>
                       <td><?php echo $dev;?></td>
                       <td><?php echo $clientname; ?></td>
-                      <td><?php echo $res['created_date'];?></td>
+                      <td><?php echo $res['targetdate'];?></td>
                     </tr>
             <?php } ?>
           </table>

@@ -4,12 +4,15 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-06-2016
+@Last modified time: 04-07-2016
 -->
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
   include('../app/db.Class.php');
   $r = new DB();
-  $createdDate = date('Y-m-d');
+  $datecreated = $r->genDate();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -98,13 +101,13 @@
 		</li>
 
 					<li class="buttons">
-          <input id="createdDate" type="hidden" name="createdDate" value="<?php echo $createdDate;?>" />
+          <input id="createdDate" type="hidden" name="createdDate" value="<?php echo $datecreated;?>" />
           <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
 		</li>
-			</ul>
+		</ul>
 
 		</form>
 	</div>
-	<img id="bottom" src="images/bottom.png" alt="">
+	<img id="bottom" src="../views/images/bottom.png" alt="">
 	</body>
 </html>

@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-06-2016
+@Last modified time: 04-07-2016
 -->
 <?php
 require("../app/db.Class.php");
@@ -28,7 +28,7 @@ if(isset($_POST["submit"])){
 
       // Get our last inserted ID and generate our ticket_number and ticket URL
       $last = $db->lastInsertID();
-      $db->query("UPDATE request SET ticket_number = concat('iws', :last) WHERE id = :last");
+      $db->query("UPDATE request SET ticket_number = concat('IWS', :last) WHERE id = :last");
       $db->bind(':last', $last);
       $db->execute();
 

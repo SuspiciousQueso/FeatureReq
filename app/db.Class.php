@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-06-2016
+@Last modified time: 04-07-2016
 -->
 <?php
 // Include Application Globals
@@ -133,7 +133,7 @@ class DB {
     }
 
     public function pastDueTickets(){
-      $this->query("SELECT * FROM request
+      $this->query("SELECT id,client,targetdate,developer,ticket_number FROM request
                     WHERE targetdate <= CURDATE()");
       $rows = $this->resultset();
       return $rows;
@@ -222,7 +222,7 @@ class DB {
 
     }
 
-
+    // Mthod to rotate priority for ticket based on form post, and date.
     public function rotatePriority($priority, $client){
       $pr = $priority;
       $c  = $client;
@@ -231,11 +231,17 @@ class DB {
                         WHEN 2 THEN 3
                         ELSE priority
                         END
-                WHERE priority = :priority AND client = :client");
+                WHERE priority = :priority AND client = :client
+                AND targetdate <= CURDATE()");
       $this->bind(':priority', $priority);
       $this->bind(':client', $client);
       $this->execute();
     }
+
+   public function genDate(){
+     $createdDate = date('Y-m-d');
+     return $createdDate;   
+   }
 }
 
 
