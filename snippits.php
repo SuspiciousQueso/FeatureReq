@@ -4,7 +4,7 @@
 @Email:  billyraybaldwin@gmail.com
 @Project: FeatureREQ
 @Last modified by:   bbaldwin
-@Last modified time: 04-05-2016
+@Last modified time: 04-08-2016
 -->
 <select class="element select medium" id="developer" name="developer">
     <option value="" selected="selected"></option>
@@ -76,3 +76,86 @@ if (isset($_GET['client'])) {
 
 
     client ftitle description date date_1 date_2 date_3 product
+
+
+    /** old inde.php **/
+
+    <img id="top" src="views/images/top.png" alt="">
+    	<div id="form_container">
+    		<h1><a href="<?php echo $r->server(); ?>">IWS Feature Request</a></h1>
+    		<form class="request" >
+    					<div class="form_description">
+    			         <h2>Welcome to the IWS Feature Request System.</h2>
+    			            <p>Please use the links below to navigate in the system.</p>
+    		      </div>
+              <h3>All unassigned tickets per client</h3>
+              <table width="100%">
+                        <tr>
+                            <th>Ticket Number</th>
+                            <th>Client Name</th>
+                            <th>Date Created</th>
+                        </tr>
+
+                <?php  foreach($r->listTickets() as $res) {
+                        $clientname = $r->convertClient($res['client']);
+                        $c = $res['client'];
+                        $ticketnum =$res['ticket_number'];
+                        ?>
+                        <tr>
+                          <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['ticket_number'];?></a></td>
+                          <td><?php echo $clientname; ?></td>
+                          <td><?php echo $res['created_date'];?></td>
+                        </tr>
+                <?php } ?>
+              </table>
+              <br />
+              <br />
+              <h3>Tickets that are assigned, but past due.</h3>
+              <table width="100%">
+                        <tr>
+                            <th>Ticket Number</th>
+                            <th>Assigned To</th>
+                            <th>Client Name</th>
+                            <th>Target Date</th>
+                        </tr>
+
+                <?php  foreach($r->pastDueTickets() as $res) {
+                        $clientname = $r->convertClient($res['client']);
+                        $dev        = $r->showDeveloper($res['developer']);
+                        ?>
+                        <tr>
+                          <td><a href="<?php echo "http://$server/views/req.clientticket.php?client=$c&ticket=$ticketnum";?>"><?php echo $res['ticket_number'];?></a></td>
+                          <td><?php echo $dev;?></td>
+                          <td><?php echo $clientname; ?></td>
+                          <td><?php echo $res['targetdate'];?></td>
+                        </tr>
+                <?php } ?>
+              </table>
+              <br />
+              <br />
+              <h3>System Navigation Links</h3>
+              <table width="100%">
+                        <tr>
+                            <th>Open A New Request</th>
+                            <th>View All Tickets By client</th>
+                            <th>Login To Admin</th>
+                        </tr>
+                        <tr>
+                            <td><a href="<?php echo "http://$server/views/req.form.php"?>"</a>Request Form</td>
+                            <td>
+                              <form id="clientselect" method="post" name="clientselect" action="" target="" >
+                                <select class="element select medium" id="client" name="client" >
+                  			            <option value="3" selected="selected">Choose client</option>
+                  			            <option value="0" >Client A</option>
+                  			            <option value="1" >Client B</option>
+                  			            <option value="2" >Client C</option>
+                                </select>
+                                <li class="buttons">
+                                <input id="pickclient" class="button_text" type="submit" name="submit" value="Submit" />
+                            </td>
+                            <td><a href="">Admin Login</a></td>
+                          </tr>
+                  </div>
+            </form>
+    	</div>
+    	<!-- <img id="bottom" src="views/images/bottom.png" alt=""> -->

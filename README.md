@@ -6,9 +6,6 @@
 @Last modified by:   bbaldwin
 @Last modified time: 04-03-2016
 -->
-
-
-
 # FeatureReq
 A simple web application for clients to request features online.
 // ToDO Monday, finish this readme! //
